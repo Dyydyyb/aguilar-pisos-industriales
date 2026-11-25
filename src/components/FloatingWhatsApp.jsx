@@ -12,7 +12,7 @@ export default function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Enviar consulta por WhatsApp a ${BUSINESS_INFO.name} (${BUSINESS_INFO.phoneDisplay})`}
-      className="fixed right-4 bottom-4 z-40 inline-flex min-h-[52px] min-w-[52px] items-center justify-center gap-2.5 border border-[#C2410C] bg-[#EA580C] px-3.5 text-sm font-semibold text-white shadow-md shadow-slate-950/35 transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98] sm:right-6 sm:bottom-6 sm:px-5"
+      className="animate-float-entry fixed right-4 bottom-4 z-40 inline-flex min-h-[52px] min-w-[52px] items-center justify-center gap-2.5 rounded-full border border-[#C2410C] bg-[#EA580C] px-3.5 text-sm font-semibold text-white shadow-md shadow-slate-950/35 transition-[background-color,transform] duration-150 hover:-translate-y-0.5 hover:bg-[#C2410C] active:scale-[0.96] sm:right-6 sm:bottom-6 sm:px-5"
     >
       <WhatsAppIcon className="h-5 w-5 shrink-0" />
       <span className="hidden sm:inline">WhatsApp</span>

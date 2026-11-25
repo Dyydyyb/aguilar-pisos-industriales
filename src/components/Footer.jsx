@@ -24,7 +24,7 @@ export default function Footer() {
               propia, arquitectura y construcción integral para galpones, fábricas y obras civiles.
             </p>
 
-            <div className="mt-6 inline-flex items-center gap-2.5 border border-[#334155] bg-[#1E293B] px-4 py-2.5 text-xs font-semibold text-[#F8FAFC]">
+            <div className="mt-6 inline-flex items-center gap-2.5 rounded-xl border border-[#334155] bg-[#1E293B] px-4 py-2.5 text-xs font-semibold text-[#F8FAFC]">
               <ClipboardCheck className="h-4 w-4 shrink-0 text-[#EA580C]" aria-hidden="true" />
               <span>Cotizaciones y visitas técnicas sin cargo</span>
             </div>

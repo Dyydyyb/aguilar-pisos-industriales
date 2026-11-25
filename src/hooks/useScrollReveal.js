@@ -1,20 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 
+const HIDDEN_VARIANT_CLASSES = {
+  up: 'opacity-0 translate-y-6',
+  scale: 'opacity-0 translate-y-4 scale-[0.975]',
+  left: 'opacity-0 -translate-x-5',
+  right: 'opacity-0 translate-x-5',
+};
+
+const VISIBLE_VARIANT_CLASSES = {
+  up: 'opacity-100 translate-y-0',
+  scale: 'opacity-100 translate-y-0 scale-100',
+  left: 'opacity-100 translate-x-0',
+  right: 'opacity-100 translate-x-0',
+};
+
 /**
- * Custom hook reutilizable con IntersectionObserver para animar entradas suaves al scrollear.
- * Transición: opacity-0 translate-y-6 -> opacity-100 translate-y-0 (600ms cubic-bezier(0.16, 1, 0.3, 1)).
- * Soporta retraso escalonado (`stagger` / `delayMs`) y respeta `prefers-reduced-motion`.
- *
- * @param {Object} [options]
- * @param {number} [options.threshold=0.12]
- * @param {string} [options.rootMargin='0px 0px -32px 0px']
- * @param {number} [options.delayMs=0]
- * @param {boolean} [options.triggerOnce=true]
+ * Custom hook reutilizable con IntersectionObserver para animar entradas fluidas al scrollear.
+ * Soporta variantes (`up`, `scale`, `left`, `right`), `delayMs` (stagger) y `prefers-reduced-motion`.
+ * Libera `will-change` automáticamente una vez revelada la vista.
  */
 export function useScrollReveal({
   threshold = 0.12,
   rootMargin = '0px 0px -32px 0px',
   delayMs = 0,
+  variant = 'up',
   triggerOnce = true,
 } = {}) {
   const ref = useRef(null);
@@ -58,8 +67,11 @@ export function useScrollReveal({
     return () => observer.disconnect();
   }, [threshold, rootMargin, triggerOnce]);
 
+  const hiddenClass = HIDDEN_VARIANT_CLASSES[variant] || HIDDEN_VARIANT_CLASSES.up;
+  const visibleClass = VISIBLE_VARIANT_CLASSES[variant] || VISIBLE_VARIANT_CLASSES.up;
+
   const revealClassName = `transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 will-change-[opacity,transform]'
+    isVisible ? visibleClass : `${hiddenClass} will-change-[opacity,transform]`
   }`;
 
   const revealStyle = delayMs > 0 ? { transitionDelay: `${delayMs}ms` } : undefined;

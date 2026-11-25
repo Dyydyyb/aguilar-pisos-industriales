@@ -5,10 +5,12 @@ export default function Reveal({
   as: Component = 'div',
   className = '',
   delayMs = 0,
+  variant = 'up',
   threshold = 0.12,
 }) {
   const { ref, revealClassName, revealStyle } = useScrollReveal({
     delayMs,
+    variant,
     threshold,
   });
 

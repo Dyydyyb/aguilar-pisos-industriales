@@ -25,11 +25,9 @@ const SERVICE_ICONS = {
 };
 
 export default function Services({ onSelectService }) {
-  const [activeDivisionId, setActiveDivisionId] = useState(SERVICE_DIVISIONS[0].id);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const activeDivision =
-    SERVICE_DIVISIONS.find((division) => division.id === activeDivisionId) ||
-    SERVICE_DIVISIONS[0];
+  const activeDivision = SERVICE_DIVISIONS[activeIndex] || SERVICE_DIVISIONS[0];
 
   const handleConsultClick = (service) => {
     onSelectService({
@@ -58,15 +56,22 @@ export default function Services({ onSelectService }) {
           </p>
         </Reveal>
 
-        {/* Tabs interactivos */}
+        {/* Tabs interactivos redondeados con indicador deslizante */}
         <Reveal delayMs={80} className="mt-10 sm:mt-12">
           <div
             role="tablist"
             aria-label="Divisiones de servicios"
-            className="grid grid-cols-1 border border-[#CBD5E1] bg-[#E2E8F0] p-1 sm:inline-grid sm:grid-cols-2"
+            className="relative grid grid-cols-1 gap-1.5 rounded-2xl border border-[#CBD5E1] bg-[#E2E8F0] p-1.5 sm:inline-grid sm:grid-cols-2 sm:gap-0"
           >
-            {SERVICE_DIVISIONS.map((division) => {
-              const isSelected = division.id === activeDivision.id;
+            {/* Indicador deslizante suave en desktop/tablet */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none hidden sm:block absolute top-1.5 bottom-1.5 left-1.5 w-[calc(50%-0.375rem)] rounded-xl bg-[#0F172A] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{ transform: `translateX(${activeIndex * 100}%)` }}
+            />
+
+            {SERVICE_DIVISIONS.map((division, idx) => {
+              const isSelected = idx === activeIndex;
               return (
                 <button
                   key={division.id}
@@ -75,16 +80,16 @@ export default function Services({ onSelectService }) {
                   type="button"
                   aria-selected={isSelected}
                   aria-controls={`panel-${division.id}`}
-                  onClick={() => setActiveDivisionId(division.id)}
-                  className={`relative flex min-h-[48px] items-center justify-center gap-3 px-6 py-3 text-left text-sm font-semibold transition-colors duration-150 active:scale-[0.98] sm:min-w-[260px] sm:text-base ${
+                  onClick={() => setActiveIndex(idx)}
+                  className={`relative z-10 flex min-h-[48px] items-center justify-center gap-3 rounded-xl px-6 py-3 text-left text-sm font-semibold transition-colors duration-200 active:scale-[0.98] sm:min-w-[270px] sm:text-base ${
                     isSelected
-                      ? 'bg-[#0F172A] text-[#F8FAFC]'
-                      : 'bg-transparent text-slate-700 hover:bg-[#F8FAFC]/70 hover:text-[#0F172A]'
+                      ? 'bg-[#0F172A] text-[#F8FAFC] sm:bg-transparent'
+                      : 'bg-transparent text-slate-700 hover:text-[#0F172A]'
                   }`}
                 >
                   <span>{division.label}</span>
                   <span
-                    className={`tabular-nums px-2 py-0.5 text-xs font-semibold ${
+                    className={`tabular-nums rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors duration-200 ${
                       isSelected
                         ? 'bg-[#EA580C] text-white'
                         : 'border border-[#CBD5E1] bg-[#F8FAFC] text-slate-600'
@@ -98,7 +103,7 @@ export default function Services({ onSelectService }) {
           </div>
         </Reveal>
 
-        {/* Panel de división activo con transición fluida */}
+        {/* Panel de división activo con tarjetas redondeadas y stagger suave */}
         <div
           key={activeDivision.id}
           id={`panel-${activeDivision.id}`}
@@ -106,22 +111,23 @@ export default function Services({ onSelectService }) {
           aria-labelledby={`tab-${activeDivision.id}`}
           className="animate-tab-panel mt-8"
         >
-          <p className="mb-6 max-w-3xl text-sm font-medium text-slate-600 sm:text-base">
+          <p className="mb-7 max-w-3xl text-sm font-medium text-slate-600 sm:text-base">
             {activeDivision.summary}
           </p>
 
-          {/* Grid arquitectónico con líneas divisorias finas de 1px */}
-          <div className="grid grid-cols-1 gap-px border border-[#CBD5E1] bg-[#CBD5E1] md:grid-cols-2">
-            {activeDivision.items.map((service) => {
+          {/* Grilla moderna con tarjetas redondeadas y elevación sutil */}
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
+            {activeDivision.items.map((service, idx) => {
               const IconComponent = SERVICE_ICONS[service.icon] || Disc;
               return (
                 <article
                   key={service.id}
-                  className="group flex flex-col justify-between bg-[#F8FAFC] p-6 transition-colors duration-150 hover:bg-[#FFFFFF] sm:p-8"
+                  style={{ animationDelay: `${idx * 60}ms` }}
+                  className="animate-card-in group flex flex-col justify-between rounded-2xl border border-[#CBD5E1] bg-white p-6 transition-[transform,border-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-slate-400 sm:p-8"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-4">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A] transition-colors duration-150 group-hover:border-[#EA580C] group-hover:bg-[#EA580C] group-hover:text-white">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A] transition-colors duration-200 group-hover:border-[#EA580C] group-hover:bg-[#EA580C] group-hover:text-white">
                         <IconComponent className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
                       </span>
                     </div>
@@ -139,7 +145,7 @@ export default function Services({ onSelectService }) {
                       {service.specs.map((spec) => (
                         <li
                           key={spec}
-                          className="border border-[#CBD5E1] bg-[#E2E8F0]/60 px-2.5 py-1 text-xs font-medium text-slate-700"
+                          className="rounded-lg border border-[#CBD5E1] bg-[#F8FAFC] px-3 py-1 text-xs font-medium text-slate-700"
                         >
                           {spec}
                         </li>
@@ -151,11 +157,11 @@ export default function Services({ onSelectService }) {
                     <button
                       type="button"
                       onClick={() => handleConsultClick(service)}
-                      className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-[#EA580C] transition-colors duration-150 hover:text-[#C2410C] active:scale-[0.98]"
+                      className="inline-flex min-h-[44px] items-center gap-2 rounded-xl px-1 text-sm font-semibold text-[#EA580C] transition-colors duration-150 hover:text-[#C2410C] active:scale-[0.97]"
                     >
                       <span>Consultar este servicio</span>
                       <ArrowRight
-                        className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-1"
+                        className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
                         aria-hidden="true"
                       />
                     </button>

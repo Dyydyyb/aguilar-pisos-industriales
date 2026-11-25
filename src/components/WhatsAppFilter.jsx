@@ -62,15 +62,16 @@ export default function WhatsAppFilter({
         </Reveal>
 
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-start lg:gap-8">
-          {/* Panel configurador interactivo (izquierda) */}
+          {/* Panel configurador interactivo redondeado (izquierda) */}
           <Reveal
+            variant="scale"
             delayMs={80}
-            className="border border-[#CBD5E1] bg-[#F8FAFC] p-5 sm:p-8 lg:col-span-7"
+            className="rounded-2xl border border-[#CBD5E1] bg-[#F8FAFC] p-5 sm:p-8 lg:col-span-7"
           >
             {/* Paso 1: Tipo de obra / alianza */}
             <fieldset>
               <legend className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg">
-                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
+                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
                   1
                 </span>
                 <span>¿Qué necesitás construir?</span>
@@ -86,13 +87,13 @@ export default function WhatsAppFilter({
                       type="button"
                       aria-pressed={isActive}
                       onClick={() => onSelectServiceCategory(option)}
-                      className={`flex min-h-[48px] items-center justify-between gap-2 border px-4 py-2.5 text-left text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                      className={`flex min-h-[48px] items-center justify-between gap-2 rounded-xl border px-4 py-2.5 text-left text-sm font-semibold transition-[background-color,border-color,color,transform] duration-150 active:scale-[0.97] ${
                         isAlliancePill ? 'sm:col-span-2' : ''
                       } ${
                         isActive
                           ? 'border-[#0F172A] bg-[#0F172A] text-[#F8FAFC]'
                           : isAlliancePill
-                            ? 'border-[#94A3B8] bg-[#E2E8F0]/55 text-[#0F172A] hover:border-[#0F172A] hover:bg-white'
+                            ? 'border-[#94A3B8] bg-[#E2E8F0]/60 text-[#0F172A] hover:border-[#0F172A] hover:bg-white'
                             : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
                       }`}
                     >
@@ -106,7 +107,7 @@ export default function WhatsAppFilter({
                         <span>{option}</span>
                       </span>
                       <span
-                        className={`h-2.5 w-2.5 shrink-0 ${
+                        className={`h-2.5 w-2.5 shrink-0 rounded-full ${
                           isActive ? 'bg-[#EA580C]' : 'border border-[#CBD5E1] bg-transparent'
                         }`}
                         aria-hidden="true"
@@ -117,7 +118,7 @@ export default function WhatsAppFilter({
               </div>
 
               {selectedServiceDetail && !isAllianceMode && (
-                <div className="mt-3 flex items-center justify-between gap-3 border border-[#CBD5E1] bg-[#E2E8F0] px-3.5 py-2 text-xs text-[#0F172A]">
+                <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] px-3.5 py-2 text-xs text-[#0F172A]">
                   <span className="min-w-0 truncate">
                     <strong className="font-semibold">Servicio específico:</strong>{' '}
                     {selectedServiceDetail}
@@ -125,7 +126,7 @@ export default function WhatsAppFilter({
                   <button
                     type="button"
                     onClick={onClearServiceDetail}
-                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] text-slate-700 transition-colors hover:border-[#0F172A] hover:text-[#0F172A]"
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#CBD5E1] bg-[#F8FAFC] text-slate-700 transition-colors hover:border-[#0F172A] hover:text-[#0F172A]"
                     aria-label="Quitar servicio específico"
                   >
                     <X className="h-3.5 w-3.5" aria-hidden="true" />
@@ -140,7 +141,7 @@ export default function WhatsAppFilter({
               className="animate-tab-panel mt-8 border-t border-[#E2E8F0] pt-7"
             >
               <legend className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg">
-                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
+                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
                   2
                 </span>
                 <span>{isAllianceMode ? 'Rubro de tu empresa' : 'Superficie estimada (m²)'}</span>
@@ -156,7 +157,7 @@ export default function WhatsAppFilter({
                         type="button"
                         aria-pressed={isActive}
                         onClick={() => setSelectedSector(sectorOption)}
-                        className={`inline-flex min-h-[44px] items-center justify-center border px-4 py-2 text-center text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                        className={`inline-flex min-h-[44px] items-center justify-center rounded-xl border px-4 py-2 text-center text-sm font-semibold transition-[background-color,border-color,color,transform] duration-150 active:scale-[0.97] ${
                           isActive
                             ? 'border-[#EA580C] bg-[#EA580C] text-white'
                             : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
@@ -177,7 +178,7 @@ export default function WhatsAppFilter({
                         type="button"
                         aria-pressed={isActive}
                         onClick={() => setSelectedArea(areaOption)}
-                        className={`tabular-nums inline-flex min-h-[44px] items-center justify-center border px-4 py-2 text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                        className={`tabular-nums inline-flex min-h-[44px] items-center justify-center rounded-xl border px-4 py-2 text-sm font-semibold transition-[background-color,border-color,color,transform] duration-150 active:scale-[0.97] ${
                           isActive
                             ? 'border-[#EA580C] bg-[#EA580C] text-white'
                             : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
@@ -197,7 +198,7 @@ export default function WhatsAppFilter({
                 htmlFor="obra-zona"
                 className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg"
               >
-                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
+                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
                   3
                 </span>
                 <span>
@@ -219,7 +220,7 @@ export default function WhatsAppFilter({
                   onChange={(event) => setZone(event.target.value)}
                   placeholder="Ej: Quilmes, Florencio Varela, Ezeiza, Avellaneda..."
                   autoComplete="address-level2"
-                  className="min-h-[48px] w-full border border-[#CBD5E1] bg-white py-3 pr-4 pl-10 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:border-[#EA580C] focus:outline-none sm:text-base"
+                  className="min-h-[48px] w-full rounded-xl border border-[#CBD5E1] bg-white py-3 pr-4 pl-10 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:border-[#EA580C] focus:outline-none sm:text-base"
                 />
               </div>
               <p className="mt-2 text-xs text-slate-600">
@@ -230,8 +231,9 @@ export default function WhatsAppFilter({
 
           {/* Vista previa en vivo y envío a WhatsApp (derecha) */}
           <Reveal
+            variant="scale"
             delayMs={160}
-            className="border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC] sm:p-8 lg:sticky lg:top-[96px] lg:col-span-5"
+            className="rounded-2xl border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC] sm:p-8 lg:sticky lg:top-[96px] lg:col-span-5"
           >
             <div className="flex items-center justify-between gap-3 border-b border-[#334155] pb-4">
               <div>
@@ -242,16 +244,17 @@ export default function WhatsAppFilter({
                   Destino: WhatsApp {BUSINESS_INFO.phoneDisplay}
                 </p>
               </div>
-              <span className="inline-flex items-center gap-1.5 border border-[#334155] bg-[#1E293B] px-2.5 py-1 text-[11px] font-semibold text-slate-200">
-                <span className="h-2 w-2 bg-[#EA580C]" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#334155] bg-[#1E293B] px-3 py-1 text-[11px] font-semibold text-slate-200">
+                <span className="h-2 w-2 rounded-full bg-[#EA580C]" aria-hidden="true" />
                 {isAllianceMode ? 'Alianza B2B' : 'En vivo'}
               </span>
             </div>
 
-            {/* Recuadro de mensaje generado */}
+            {/* Recuadro de mensaje generado con feedback de actualización */}
             <div
+              key={previewMessage}
               aria-live="polite"
-              className="mt-5 border border-[#334155] bg-[#1E293B] p-4 sm:p-5"
+              className="animate-preview-ack mt-5 rounded-xl border border-[#334155] bg-[#1E293B] p-4 sm:p-5"
             >
               <p className="text-sm leading-relaxed text-slate-100">{previewMessage}</p>
             </div>
@@ -284,7 +287,7 @@ export default function WhatsAppFilter({
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 bg-[#EA580C] px-5 py-3 text-center text-sm font-bold text-white transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98] sm:text-base"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-xl bg-[#EA580C] px-5 py-3 text-center text-sm font-bold text-white transition-[background-color,transform] duration-150 hover:bg-[#C2410C] active:scale-[0.97] sm:text-base"
               >
                 <WhatsAppIcon className="h-5 w-5 shrink-0" />
                 <span>
@@ -297,7 +300,7 @@ export default function WhatsAppFilter({
               <button
                 type="button"
                 onClick={handleCopyMessage}
-                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 border border-[#334155] bg-[#1E293B] px-4 text-xs font-semibold text-slate-200 transition-colors hover:border-slate-400 hover:text-white active:scale-[0.98]"
+                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-[#334155] bg-[#1E293B] px-4 text-xs font-semibold text-slate-200 transition-[border-color,color,transform] duration-150 hover:border-slate-400 hover:text-white active:scale-[0.97]"
               >
                 {copied ? (
                   <>

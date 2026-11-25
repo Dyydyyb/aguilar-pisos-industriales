@@ -46,7 +46,8 @@ function validateForm(values) {
   }
 
   if (!values.detalle.trim() || values.detalle.trim().length < 12) {
-    errors.detalle = 'Indicá brevemente tipo de obra, m² aproximados o localidad (mínimo 12 caracteres).';
+    errors.detalle =
+      'Indicá brevemente tipo de obra, m² aproximados o localidad (mínimo 12 caracteres).';
   }
 
   return errors;
@@ -119,7 +120,7 @@ export default function ContactForm() {
     : '#';
 
   const inputBaseClass =
-    'min-h-[48px] w-full border bg-[#F8FAFC] px-3.5 py-2.5 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px]';
+    'min-h-[48px] w-full rounded-xl border bg-[#F8FAFC] px-3.5 py-2.5 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px]';
 
   return (
     <section
@@ -139,12 +140,12 @@ export default function ContactForm() {
                 prefieren dejar las especificaciones técnicas de su obra.
               </p>
 
-              <div className="mt-8 divide-y divide-[#CBD5E1] border-y border-[#CBD5E1]">
+              <div className="mt-8 overflow-hidden rounded-2xl border border-[#CBD5E1] bg-white divide-y divide-[#E2E8F0]">
                 <a
                   href={BUSINESS_INFO.phoneHref}
-                  className="flex min-h-[64px] items-center gap-4 py-4 transition-colors hover:bg-[#E2E8F0]/50"
+                  className="flex min-h-[68px] items-center gap-4 px-5 py-4 transition-colors hover:bg-[#F8FAFC]"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
                     <Phone className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
                   </span>
                   <div>
@@ -157,8 +158,8 @@ export default function ContactForm() {
                   </div>
                 </a>
 
-                <div className="flex min-h-[64px] items-center gap-4 py-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
+                <div className="flex min-h-[68px] items-center gap-4 px-5 py-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
                     <MapPin className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
                   </span>
                   <div>
@@ -175,9 +176,9 @@ export default function ContactForm() {
                   href={BUSINESS_INFO.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex min-h-[64px] items-center gap-4 py-4 transition-colors hover:bg-[#E2E8F0]/50"
+                  className="flex min-h-[68px] items-center gap-4 px-5 py-4 transition-colors hover:bg-[#F8FAFC]"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
                     <Instagram className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
                   </span>
                   <div>
@@ -192,7 +193,7 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="mt-8 border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC]">
+            <div className="mt-6 rounded-2xl border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC]">
               <div className="flex items-start gap-3.5">
                 <ClipboardCheck
                   className="mt-0.5 h-5 w-5 shrink-0 text-[#EA580C]"
@@ -213,12 +214,13 @@ export default function ContactForm() {
 
           {/* Formulario formal / Pantalla de éxito (derecha) */}
           <Reveal
+            variant="scale"
             delayMs={100}
-            className="border border-[#CBD5E1] bg-white p-6 sm:p-8 lg:col-span-7"
+            className="rounded-2xl border border-[#CBD5E1] bg-white p-6 sm:p-8 lg:col-span-7"
           >
             {submittedData ? (
-              <div className="flex flex-col py-4" role="status" aria-live="polite">
-                <span className="flex h-12 w-12 items-center justify-center border border-[#CBD5E1] bg-[#E2E8F0] text-[#EA580C]">
+              <div className="animate-tab-panel flex flex-col py-4" role="status" aria-live="polite">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#EA580C]">
                   <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
                 </span>
 
@@ -234,7 +236,7 @@ export default function ContactForm() {
                   cargo.
                 </p>
 
-                <dl className="mt-6 space-y-2 border border-[#CBD5E1] bg-[#F8FAFC] p-4 text-sm">
+                <dl className="mt-6 space-y-2 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] p-4 text-sm">
                   <div className="flex flex-wrap justify-between gap-2">
                     <dt className="text-slate-500">Nombre / Empresa:</dt>
                     <dd className="font-semibold text-[#0F172A]">{submittedData.nombre}</dd>
@@ -256,7 +258,7 @@ export default function ContactForm() {
                     href={whatsappCopyHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 bg-[#EA580C] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#C2410C] active:scale-[0.98]"
+                    className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#EA580C] px-5 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-[#C2410C] active:scale-[0.97]"
                   >
                     <WhatsAppIcon className="h-4 w-4 shrink-0" />
                     <span>Enviar copia rápida por WhatsApp</span>
@@ -265,7 +267,7 @@ export default function ContactForm() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="inline-flex min-h-[48px] items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] px-5 text-sm font-semibold text-[#0F172A] transition-colors hover:border-[#0F172A] active:scale-[0.98]"
+                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] px-5 text-sm font-semibold text-[#0F172A] transition-[border-color,transform] hover:border-[#0F172A] active:scale-[0.97]"
                   >
                     Nueva consulta
                   </button>
@@ -301,7 +303,11 @@ export default function ContactForm() {
                       }`}
                     />
                     {errors.nombre && (
-                      <p id="error-nombre" role="alert" className="mt-1.5 text-xs font-medium text-red-700">
+                      <p
+                        id="error-nombre"
+                        role="alert"
+                        className="mt-1.5 text-xs font-medium text-red-700"
+                      >
                         {errors.nombre}
                       </p>
                     )}
@@ -334,7 +340,11 @@ export default function ContactForm() {
                       }`}
                     />
                     {errors.telefono && (
-                      <p id="error-telefono" role="alert" className="mt-1.5 text-xs font-medium text-red-700">
+                      <p
+                        id="error-telefono"
+                        role="alert"
+                        className="mt-1.5 text-xs font-medium text-red-700"
+                      >
                         {errors.telefono}
                       </p>
                     )}
@@ -369,7 +379,11 @@ export default function ContactForm() {
                       }`}
                     />
                     {errors.email && (
-                      <p id="error-email" role="alert" className="mt-1.5 text-xs font-medium text-red-700">
+                      <p
+                        id="error-email"
+                        role="alert"
+                        className="mt-1.5 text-xs font-medium text-red-700"
+                      >
                         {errors.email}
                       </p>
                     )}
@@ -407,7 +421,11 @@ export default function ContactForm() {
                       ))}
                     </select>
                     {errors.servicio && (
-                      <p id="error-servicio" role="alert" className="mt-1.5 text-xs font-medium text-red-700">
+                      <p
+                        id="error-servicio"
+                        role="alert"
+                        className="mt-1.5 text-xs font-medium text-red-700"
+                      >
                         {errors.servicio}
                       </p>
                     )}
@@ -434,14 +452,18 @@ export default function ContactForm() {
                     placeholder="Contanos ubicación, m² estimados, uso previsto del piso o etapa de obra..."
                     aria-invalid={Boolean(errors.detalle)}
                     aria-describedby={errors.detalle ? 'error-detalle' : undefined}
-                    className={`mt-2 w-full border bg-[#F8FAFC] px-3.5 py-3 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px] ${
+                    className={`mt-2 w-full rounded-xl border bg-[#F8FAFC] px-3.5 py-3 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px] ${
                       errors.detalle
                         ? 'border-red-600 focus:border-red-600'
                         : 'border-[#CBD5E1] focus:border-[#EA580C]'
                     }`}
                   />
                   {errors.detalle && (
-                    <p id="error-detalle" role="alert" className="mt-1.5 text-xs font-medium text-red-700">
+                    <p
+                      id="error-detalle"
+                      role="alert"
+                      className="mt-1.5 text-xs font-medium text-red-700"
+                    >
                       {errors.detalle}
                     </p>
                   )}
@@ -455,7 +477,7 @@ export default function ContactForm() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex min-h-[50px] items-center justify-center gap-2.5 bg-[#0F172A] px-7 text-sm font-semibold text-[#F8FAFC] transition-colors duration-150 hover:bg-[#EA580C] disabled:cursor-not-allowed disabled:opacity-70 active:scale-[0.98]"
+                    className="inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-xl bg-[#0F172A] px-7 text-sm font-semibold text-[#F8FAFC] transition-[background-color,transform] duration-150 hover:bg-[#EA580C] disabled:cursor-not-allowed disabled:opacity-70 active:scale-[0.97]"
                   >
                     {isSubmitting ? (
                       <>

@@ -49,7 +49,6 @@ export default function ProjectsSlider({ onSelectService }) {
     const deltaX = touchStartRef.current.x - touchEndRef.current.x;
     const deltaY = touchStartRef.current.y - touchEndRef.current.y;
 
-    // Solo dispara swipe horizontal cuando supera 45px y domina sobre el desplazamiento vertical
     if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
       if (deltaX > 0) {
         goToNext();
@@ -61,7 +60,6 @@ export default function ProjectsSlider({ onSelectService }) {
     resetTouchState();
   };
 
-  // Navegación por teclado y bloqueo de scroll cuando el Lightbox está abierto
   useEffect(() => {
     if (lightboxIndex === null) return undefined;
 
@@ -101,8 +99,8 @@ export default function ProjectsSlider({ onSelectService }) {
               Obras Realizadas en Campo
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-700">
-              Trabajos reales en pisos industriales, accesos de camiones, playones cívicos, sendas
-              y hormigón pigmentado ejecutados en Florencio Varela y Buenos Aires Zona Sur.
+              Trabajos reales en pisos industriales, playones cívicos, sendas, hormigón pigmentado
+              y accesos de camiones ejecutados en Florencio Varela y Buenos Aires Zona Sur.
             </p>
           </div>
 
@@ -119,7 +117,7 @@ export default function ProjectsSlider({ onSelectService }) {
               <button
                 type="button"
                 onClick={goToPrevious}
-                className="inline-flex h-11 w-11 items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] transition-colors duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] hover:text-white active:scale-[0.98]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] transition-[background-color,border-color,color,transform] duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] hover:text-white active:scale-[0.96]"
                 aria-label="Proyecto anterior"
               >
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -127,7 +125,7 @@ export default function ProjectsSlider({ onSelectService }) {
               <button
                 type="button"
                 onClick={goToNext}
-                className="inline-flex h-11 w-11 items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] transition-colors duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] hover:text-white active:scale-[0.98]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] transition-[background-color,border-color,color,transform] duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] hover:text-white active:scale-[0.96]"
                 aria-label="Proyecto siguiente"
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />
@@ -136,10 +134,10 @@ export default function ProjectsSlider({ onSelectService }) {
           </div>
         </Reveal>
 
-        {/* Contenedor del Slider con swipe táctil real y touch-pan-y */}
-        <Reveal delayMs={100} className="mt-10">
+        {/* Contenedor principal redondeado del Slider */}
+        <Reveal variant="scale" delayMs={100} className="mt-10">
           <div
-            className="touch-pan-y overflow-hidden border border-[#CBD5E1] bg-[#F8FAFC]"
+            className="touch-pan-y overflow-hidden rounded-2xl border border-[#CBD5E1] bg-[#F8FAFC]"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -152,165 +150,190 @@ export default function ProjectsSlider({ onSelectService }) {
               className="flex transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {projectsData.map((project, index) => (
-                <div
-                  key={project.id}
-                  className="grid w-full shrink-0 grid-cols-1 lg:grid-cols-12"
-                  aria-hidden={index !== currentIndex}
-                >
-                  {/* Fotografía 4:3 mobile / 16:10 desktop con encuadre calibrado y acceso a Lightbox */}
-                  <div className="relative bg-[#0F172A] lg:col-span-7">
-                    <button
-                      type="button"
-                      onClick={() => setLightboxIndex(index)}
-                      tabIndex={index === currentIndex ? 0 : -1}
-                      className="group relative block w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#EA580C]"
-                      aria-label={`Ampliar fotografía de ${project.title}`}
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.alt}
-                        loading={index === 0 ? 'eager' : 'lazy'}
-                        className={`h-full w-full object-cover ${
-                          project.imagePosition || 'object-center'
-                        } transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]`}
-                      />
-                      {project.featured && (
-                        <span className="absolute top-3 left-3 inline-flex items-center gap-2 bg-[#EA580C] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-white">
-                          Obra Principal
-                        </span>
-                      )}
-                      <span className="absolute right-3 bottom-3 inline-flex min-h-[40px] items-center gap-2 border border-[#334155] bg-[#0F172A]/95 px-3 py-1.5 text-xs font-semibold text-[#F8FAFC] transition-colors group-hover:border-[#EA580C] group-hover:bg-[#EA580C]">
-                        <Expand className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>Ver completa</span>
-                      </span>
-                    </button>
-                  </div>
-
-                  {/* Ficha técnica del proyecto */}
-                  <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-6 sm:p-8 lg:col-span-5 lg:border-t-0 lg:border-l">
-                    <div>
-                      <span
-                        className={`inline-block px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${
-                          project.featured
-                            ? 'bg-[#EA580C] text-white'
-                            : 'border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]'
-                        }`}
-                      >
-                        {project.category}
-                      </span>
-
-                      <h3 className="mt-4 font-display text-xl font-extrabold leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-2xl">
-                        {project.title}
-                      </h3>
-
-                      {/* Metadatos técnicos */}
-                      <dl className="mt-5 grid grid-cols-1 gap-3 border-y border-[#CBD5E1] py-4 sm:grid-cols-2">
-                        <div className="flex items-start gap-2.5">
-                          <MapPin
-                            className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
-                            aria-hidden="true"
-                          />
-                          <div>
-                            <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
-                              Ubicación
-                            </dt>
-                            <dd className="mt-0.5 text-sm font-medium text-[#0F172A]">
-                              {project.location}
-                            </dd>
-                          </div>
-                        </div>
-
-                        <div className="flex items-start gap-2.5">
-                          <Layers
-                            className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
-                            aria-hidden="true"
-                          />
-                          <div>
-                            <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
-                              Terminación
-                            </dt>
-                            <dd className="mt-0.5 text-sm font-semibold text-[#0F172A]">
-                              {project.execution}
-                            </dd>
-                          </div>
-                        </div>
-                      </dl>
-
-                      <p className="mt-5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
-                        {project.description}
-                      </p>
-
-                      <p className="mt-4 border border-[#CBD5E1] bg-[#E2E8F0]/60 px-3.5 py-2.5 text-xs font-medium text-[#0F172A]">
-                        {project.specHighlight}
-                      </p>
-                    </div>
-
-                    <div className="mt-7 pt-2">
+              {projectsData.map((project, index) => {
+                const isActiveSlide = index === currentIndex;
+                return (
+                  <div
+                    key={project.id}
+                    className="grid w-full shrink-0 grid-cols-1 lg:grid-cols-12"
+                    aria-hidden={!isActiveSlide}
+                  >
+                    {/* Fotografía 4:3 mobile / 16:10 desktop con acceso a Lightbox */}
+                    <div className="relative bg-[#0F172A] lg:col-span-7">
                       <button
                         type="button"
-                        tabIndex={index === currentIndex ? 0 : -1}
-                        onClick={() =>
-                          onSelectService({
-                            category: project.filterCategory,
-                            detail: project.title,
-                          })
-                        }
-                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-[#EA580C] transition-colors hover:text-[#C2410C] active:scale-[0.98]"
+                        onClick={() => setLightboxIndex(index)}
+                        tabIndex={isActiveSlide ? 0 : -1}
+                        className="group relative block w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#EA580C]"
+                        aria-label={`Ampliar fotografía de ${project.title}`}
                       >
-                        <span>Cotizar una obra similar</span>
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        <img
+                          src={project.image}
+                          alt={project.alt}
+                          loading={index === 0 ? 'eager' : 'lazy'}
+                          className={`h-full w-full object-cover ${
+                            project.imagePosition || 'object-center'
+                          } transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                            isActiveSlide ? 'scale-100 group-hover:scale-[1.03]' : 'scale-[1.04]'
+                          }`}
+                        />
+                        {project.featured && (
+                          <span className="absolute top-3.5 left-3.5 inline-flex items-center gap-2 rounded-full bg-[#EA580C] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-white">
+                            Obra Principal
+                          </span>
+                        )}
+                        <span className="absolute right-3.5 bottom-3.5 inline-flex min-h-[40px] items-center gap-2 rounded-xl border border-[#334155] bg-[#0F172A]/95 px-3.5 py-1.5 text-xs font-semibold text-[#F8FAFC] transition-colors group-hover:border-[#EA580C] group-hover:bg-[#EA580C]">
+                          <Expand className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span>Ver completa</span>
+                        </span>
                       </button>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Bullets de paginación accesibles */}
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-1" role="tablist" aria-label="Seleccionar proyecto">
-              {projectsData.map((project, index) => {
-                const isActive = index === currentIndex;
-                return (
-                  <button
-                    key={project.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    aria-label={`Ver proyecto ${index + 1}: ${project.title}`}
-                    onClick={() => setCurrentIndex(index)}
-                    className="flex min-h-[44px] min-w-[36px] items-center justify-center px-1"
-                  >
-                    <span
-                      className={`block h-2 transition-all duration-200 ${
-                        isActive ? 'w-8 bg-[#EA580C]' : 'w-3 bg-slate-400 hover:bg-[#0F172A]'
-                      }`}
-                    />
-                  </button>
+                    {/* Ficha técnica del proyecto */}
+                    <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-6 sm:p-8 lg:col-span-5 lg:border-t-0 lg:border-l">
+                      <div>
+                        <span
+                          className={`inline-block rounded-full px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${
+                            project.featured
+                              ? 'bg-[#EA580C] text-white'
+                              : 'border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]'
+                          }`}
+                        >
+                          {project.category}
+                        </span>
+
+                        <h3 className="mt-4 font-display text-xl font-extrabold leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-2xl">
+                          {project.title}
+                        </h3>
+
+                        {/* Metadatos técnicos */}
+                        <dl className="mt-5 grid grid-cols-1 gap-3 border-y border-[#CBD5E1] py-4 sm:grid-cols-2">
+                          <div className="flex items-start gap-2.5">
+                            <MapPin
+                              className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
+                              aria-hidden="true"
+                            />
+                            <div>
+                              <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
+                                Ubicación
+                              </dt>
+                              <dd className="mt-0.5 text-sm font-medium text-[#0F172A]">
+                                {project.location}
+                              </dd>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2.5">
+                            <Layers
+                              className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
+                              aria-hidden="true"
+                            />
+                            <div>
+                              <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
+                                Terminación
+                              </dt>
+                              <dd className="mt-0.5 text-sm font-semibold text-[#0F172A]">
+                                {project.execution}
+                              </dd>
+                            </div>
+                          </div>
+                        </dl>
+
+                        <p className="mt-5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                          {project.description}
+                        </p>
+
+                        <p className="mt-4 rounded-xl border border-[#CBD5E1] bg-[#E2E8F0]/60 px-3.5 py-2.5 text-xs font-medium text-[#0F172A]">
+                          {project.specHighlight}
+                        </p>
+                      </div>
+
+                      <div className="mt-7 pt-2">
+                        <button
+                          type="button"
+                          tabIndex={isActiveSlide ? 0 : -1}
+                          onClick={() =>
+                            onSelectService({
+                              category: project.filterCategory,
+                              detail: project.title,
+                            })
+                          }
+                          className="group inline-flex min-h-[44px] items-center gap-2 rounded-xl px-1 text-sm font-semibold text-[#EA580C] transition-colors hover:text-[#C2410C] active:scale-[0.97]"
+                        >
+                          <span>Cotizar una obra similar</span>
+                          <ArrowRight
+                            className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
             </div>
+          </div>
 
-            <p className="text-xs font-medium text-slate-600">
-              Tocá cualquier fotografía para verla completa en pantalla ampliada.
-            </p>
+          {/* Grilla redondeada de miniaturas / selector rápido (orden exacto con Acceso de Camiones última) */}
+          <div
+            className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4"
+            role="tablist"
+            aria-label="Seleccionar proyecto"
+          >
+            {projectsData.map((project, index) => {
+              const isActive = index === currentIndex;
+              return (
+                <button
+                  key={project.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-label={`Ver proyecto ${index + 1}: ${project.title}`}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`group flex items-center gap-3 rounded-xl border p-2 text-left transition-[transform,border-color,background-color] duration-200 active:scale-[0.97] ${
+                    isActive
+                      ? 'border-[#EA580C] bg-[#0F172A] text-[#F8FAFC]'
+                      : 'border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] hover:-translate-y-0.5 hover:border-slate-400'
+                  }`}
+                >
+                  <img
+                    src={project.image}
+                    alt=""
+                    aria-hidden="true"
+                    className={`h-11 w-11 shrink-0 rounded-lg object-cover ${
+                      project.imagePosition || 'object-center'
+                    }`}
+                  />
+                  <span className="min-w-0">
+                    <span
+                      className={`tabular-nums block text-[11px] font-semibold ${
+                        isActive ? 'text-[#EA580C]' : 'text-slate-500'
+                      }`}
+                    >
+                      0{index + 1}
+                    </span>
+                    <span className="block truncate text-xs font-semibold sm:text-[13px]">
+                      {project.shortLabel}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </Reveal>
       </div>
 
-      {/* Lightbox Modal a pantalla completa (muestra fotografía original sin recorte) */}
+      {/* Lightbox Modal redondeado a pantalla completa */}
       {activeLightboxProject && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label={`Fotografía ampliada: ${activeLightboxProject.title}`}
-          className="animate-lightbox fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 p-4 sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 p-4 sm:p-6"
           onClick={() => setLightboxIndex(null)}
         >
           <div
-            className="relative w-full max-w-5xl border border-[#334155] bg-[#0F172A]"
+            className="animate-lightbox relative w-full max-w-5xl overflow-hidden rounded-2xl border border-[#334155] bg-[#0F172A]"
             onClick={(event) => event.stopPropagation()}
           >
             {/* Barra superior del Lightbox */}
@@ -327,7 +350,7 @@ export default function ProjectsSlider({ onSelectService }) {
               <button
                 type="button"
                 onClick={() => setLightboxIndex(null)}
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-colors hover:border-[#EA580C] hover:bg-[#EA580C]"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-colors hover:border-[#EA580C] hover:bg-[#EA580C]"
                 aria-label="Cerrar imagen ampliada"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -348,7 +371,7 @@ export default function ProjectsSlider({ onSelectService }) {
                 onClick={() =>
                   setLightboxIndex((prev) => (prev === 0 ? totalSlides - 1 : prev - 1))
                 }
-                className="absolute top-1/2 left-3 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#334155] bg-[#0F172A]/95 text-[#F8FAFC] transition-colors hover:border-[#EA580C] hover:bg-[#EA580C]"
+                className="absolute top-1/2 left-3 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl border border-[#334155] bg-[#0F172A]/95 text-[#F8FAFC] transition-colors hover:border-[#EA580C] hover:bg-[#EA580C]"
                 aria-label="Imagen anterior"
               >
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -359,7 +382,7 @@ export default function ProjectsSlider({ onSelectService }) {
                 onClick={() =>
                   setLightboxIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1))
                 }
-                className="absolute top-1/2 right-3 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#334155] bg-[#0F172A]/95 text-[#F8FAFC] transition-colors hover:border-[#EA580C] hover:bg-[#EA580C]"
+                className="absolute top-1/2 right-3 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl border border-[#334155] bg-[#0F172A]/95 text-[#F8FAFC] transition-colors hover:border-[#EA580C] hover:bg-[#EA580C]"
                 aria-label="Imagen siguiente"
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />

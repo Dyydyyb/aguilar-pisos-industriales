@@ -201,12 +201,14 @@ export const SERVICE_DIVISIONS = [
 
 /**
  * Datos del Slider de Proyectos Realizados (obras reales de Aguilar Pisos Industriales).
- * Imágenes ubicadas en `/public/images/`.
+ * Orden: 1) Plaza Principal San Juan Bautista (destacada), 2) Playón Cívico,
+ *        3) Senda Plaza Barrial, 4) Piso Industrial de Acceso de Camiones (última).
  */
 export const projectsData = [
   {
     id: 'plaza-san-juan-bautista',
     featured: true,
+    shortLabel: 'Plaza San Juan Bautista',
     title: 'Plaza Principal San Juan Bautista — Hormigón Peinado y Llaneado con Pigmento Azul',
     category: 'Obra Destacada',
     location: 'Plaza San Juan Bautista, Florencio Varela',
@@ -221,23 +223,9 @@ export const projectsData = [
     filterCategory: 'Piso Industrial / Galpón',
   },
   {
-    id: 'piso-industrial-acceso-camiones',
-    featured: false,
-    title: 'Piso Industrial de Acceso de Camiones',
-    category: 'Pisos Industriales',
-    location: 'Buenos Aires, Zona Sur',
-    execution: 'Allanadora doble tripulada',
-    specHighlight: 'Hormigón de alta resistencia • Llaneado mecánico doble • Tránsito pesado',
-    description:
-      'Ejecución de piso industrial de alta resistencia para acceso y circulación de camiones pesados, terminado con allanadora doble tripulada propia para lograr máxima planimetría y durabilidad superficial.',
-    image: '/images/obra-acceso-camiones.webp',
-    imagePosition: 'object-[50%_62%]',
-    alt: 'Operario conduciendo allanadora doble tripulada sobre piso industrial de hormigón para acceso de camiones',
-    filterCategory: 'Entrada / Playón Vehicular',
-  },
-  {
     id: 'construccion-playon-civico',
     featured: false,
+    shortLabel: 'Playón Cívico',
     title: 'Construcción de Playón Cívico',
     category: 'Obra Civil y Espacios Públicos',
     location: 'Buenos Aires, Zona Sur',
@@ -253,6 +241,7 @@ export const projectsData = [
   {
     id: 'senda-plaza-barrial',
     featured: false,
+    shortLabel: 'Senda Plaza Barrial',
     title: 'Senda para Plaza Barrial',
     category: 'Arquitectura y Obra Civil',
     location: 'Buenos Aires, Zona Sur',
@@ -264,6 +253,22 @@ export const projectsData = [
     imagePosition: 'object-[50%_50%]',
     alt: 'Ejecución de senda peatonal de hormigón peinado en plaza barrial con camión mixer en obra',
     filterCategory: 'Arquitectura y Construcción',
+  },
+  {
+    id: 'piso-industrial-acceso-camiones',
+    featured: false,
+    shortLabel: 'Acceso de Camiones',
+    title: 'Piso Industrial de Acceso de Camiones',
+    category: 'Pisos Industriales',
+    location: 'Buenos Aires, Zona Sur',
+    execution: 'Allanadora doble tripulada',
+    specHighlight: 'Hormigón de alta resistencia • Llaneado mecánico doble • Tránsito pesado',
+    description:
+      'Ejecución de piso industrial de alta resistencia para acceso y circulación de camiones pesados, terminado con allanadora doble tripulada propia para lograr máxima planimetría y durabilidad superficial.',
+    image: '/images/obra-acceso-camiones.webp',
+    imagePosition: 'object-[50%_62%]',
+    alt: 'Operario conduciendo allanadora doble tripulada sobre piso industrial de hormigón para acceso de camiones',
+    filterCategory: 'Entrada / Playón Vehicular',
   },
 ];
 

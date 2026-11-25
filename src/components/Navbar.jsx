@@ -40,7 +40,7 @@ export default function Navbar() {
         <a
           href="#inicio"
           onClick={handleNavSelect}
-          className="inline-flex items-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#EA580C]"
+          className="inline-flex items-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#EA580C]"
           aria-label="Aguilar Pisos Industriales — Ir al inicio"
         >
           <BrandLogo variant="light" compact />
@@ -52,7 +52,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="relative py-2 text-sm font-medium text-slate-200 transition-colors duration-150 hover:text-[#F8FAFC] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#EA580C] after:transition-[width] after:duration-200 hover:after:w-full"
+              className="relative py-2 text-sm font-medium text-slate-200 transition-colors duration-150 hover:text-[#F8FAFC] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-[#EA580C] after:transition-transform after:duration-200 hover:after:scale-x-100"
             >
               {link.label}
             </a>
@@ -65,7 +65,7 @@ export default function Navbar() {
             href={quickWhatsAppHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-[44px] items-center justify-center gap-2 border border-[#334155] bg-[#1E293B] px-3.5 text-sm font-medium text-[#F8FAFC] transition-colors duration-150 hover:border-slate-400 hover:bg-[#334155] active:scale-[0.98]"
+            className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-[#334155] bg-[#1E293B] px-3.5 text-sm font-medium text-[#F8FAFC] transition-[background-color,border-color,transform] duration-150 hover:border-slate-400 hover:bg-[#334155] active:scale-[0.97]"
             aria-label={`Escribir por WhatsApp al ${BUSINESS_INFO.phoneDisplay}`}
           >
             <WhatsAppIcon className="h-4 w-4 text-[#EA580C]" />
@@ -74,7 +74,7 @@ export default function Navbar() {
 
           <a
             href="#cotizador"
-            className="inline-flex min-h-[44px] items-center justify-center bg-[#EA580C] px-4 xl:px-5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98]"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#EA580C] px-4 xl:px-5 text-sm font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-[#C2410C] active:scale-[0.97]"
           >
             Cotizar Sin Cargo
           </a>
@@ -86,7 +86,7 @@ export default function Navbar() {
             href={quickWhatsAppHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 w-11 items-center justify-center border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-colors hover:border-[#EA580C] active:scale-[0.98]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-[border-color,transform] hover:border-[#EA580C] active:scale-[0.97]"
             aria-label="Abrir WhatsApp directo"
           >
             <WhatsAppIcon className="h-5 w-5 text-[#EA580C]" />
@@ -95,7 +95,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="inline-flex h-11 w-11 items-center justify-center border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-colors hover:border-slate-400 active:scale-[0.98]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-[border-color,transform] hover:border-slate-400 active:scale-[0.97]"
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav-drawer"
             aria-label={mobileOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
@@ -108,29 +108,29 @@ export default function Navbar() {
       {/* Menú Mobile animado fluido */}
       <div
         id="mobile-nav-drawer"
-        className={`grid transition-[grid-template-rows,opacity] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
           mobileOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
         }`}
       >
         <div className="overflow-hidden border-t border-[#334155] bg-[#0F172A]">
-          <nav aria-label="Navegación móvil" className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6">
+          <nav aria-label="Navegación móvil" className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={handleNavSelect}
-                className="flex min-h-[48px] items-center justify-between border-b border-[#1E293B] text-base font-medium text-slate-100 transition-colors hover:text-[#EA580C]"
+                className="flex min-h-[48px] items-center justify-between rounded-xl px-3 text-base font-medium text-slate-100 transition-colors hover:bg-[#1E293B] hover:text-[#EA580C]"
               >
                 <span>{link.label}</span>
-                <span className="h-1.5 w-1.5 bg-[#334155]" aria-hidden="true" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#334155]" aria-hidden="true" />
               </a>
             ))}
 
-            <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            <div className="mt-3 grid grid-cols-1 gap-2.5 border-t border-[#1E293B] pt-4 sm:grid-cols-2">
               <a
                 href="#cotizador"
                 onClick={handleNavSelect}
-                className="inline-flex min-h-[48px] items-center justify-center bg-[#EA580C] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#C2410C] active:scale-[0.98]"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[#EA580C] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#C2410C] active:scale-[0.97]"
               >
                 Cotizar Sin Cargo
               </a>
@@ -139,7 +139,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleNavSelect}
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 border border-[#334155] bg-[#1E293B] px-4 text-sm font-medium text-[#F8FAFC] transition-colors hover:bg-[#334155] active:scale-[0.98]"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-[#334155] bg-[#1E293B] px-4 text-sm font-medium text-[#F8FAFC] transition-colors hover:bg-[#334155] active:scale-[0.97]"
               >
                 <WhatsAppIcon className="h-4 w-4 text-[#EA580C]" />
                 <span className="tabular-nums">{BUSINESS_INFO.phoneDisplay}</span>
@@ -149,11 +149,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Barra sutil de progreso de lectura */}
-      <div className="h-[2px] w-full bg-[#1E293B]" aria-hidden="true">
+      {/* Barra sutil de progreso de lectura (100% GPU via scaleX) */}
+      <div className="h-[2px] w-full bg-[#1E293B] overflow-hidden" aria-hidden="true">
         <div
-          className="h-full bg-[#EA580C] transition-[width] duration-100 ease-out"
-          style={{ width: `${progress}%` }}
+          className="h-full w-full origin-left bg-[#EA580C] transition-transform duration-100 ease-out"
+          style={{ transform: `scaleX(${progress / 100})` }}
         />
       </div>
     </header>
