@@ -15,7 +15,7 @@ export default function ProjectsSlider({ onSelectService }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  const touchStartRef = useRef({ x: 0, y: 0 });
+  const touchStartRef = useRef({ x: 0, y: 0, active: false });
   const touchEndRef = useRef({ x: 0, y: 0 });
   const totalSlides = projectsData.length;
 
@@ -27,18 +27,25 @@ export default function ProjectsSlider({ onSelectService }) {
     setCurrentIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   }, [totalSlides]);
 
+  const resetTouchState = () => {
+    touchStartRef.current = { x: 0, y: 0, active: false };
+    touchEndRef.current = { x: 0, y: 0 };
+  };
+
   const handleTouchStart = (event) => {
     const touch = event.touches[0];
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY, active: true };
     touchEndRef.current = { x: touch.clientX, y: touch.clientY };
   };
 
   const handleTouchMove = (event) => {
+    if (!touchStartRef.current.active) return;
     const touch = event.touches[0];
     touchEndRef.current = { x: touch.clientX, y: touch.clientY };
   };
 
   const handleTouchEnd = () => {
+    if (!touchStartRef.current.active) return;
     const deltaX = touchStartRef.current.x - touchEndRef.current.x;
     const deltaY = touchStartRef.current.y - touchEndRef.current.y;
 
@@ -50,6 +57,8 @@ export default function ProjectsSlider({ onSelectService }) {
         goToPrevious();
       }
     }
+
+    resetTouchState();
   };
 
   // Navegación por teclado y bloqueo de scroll cuando el Lightbox está abierto
@@ -82,16 +91,16 @@ export default function ProjectsSlider({ onSelectService }) {
   return (
     <section
       id="proyectos"
-      className="border-b border-[#334155] bg-[#0F172A] py-20 text-[#F8FAFC] sm:py-24 lg:py-28"
+      className="border-b border-[#CBD5E1] bg-[#E2E8F0] py-20 text-[#0F172A] sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Encabezado y controles del slider */}
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-[#F8FAFC] text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
+            <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-[#0F172A] text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
               Obras Realizadas en Campo
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-300">
+            <p className="mt-4 text-base leading-relaxed text-slate-700">
               Trabajos reales en pisos industriales, accesos de camiones, playones cívicos, sendas
               y hormigón pigmentado ejecutados en Florencio Varela y Buenos Aires Zona Sur.
             </p>
@@ -99,7 +108,7 @@ export default function ProjectsSlider({ onSelectService }) {
 
           <div className="flex items-center justify-between gap-4 sm:justify-end">
             <span
-              className="tabular-nums text-sm font-semibold tracking-[0.08em] text-slate-300"
+              className="tabular-nums text-sm font-semibold tracking-[0.08em] text-slate-700"
               aria-live="polite"
             >
               {String(currentIndex + 1).padStart(2, '0')} /{' '}
@@ -110,7 +119,7 @@ export default function ProjectsSlider({ onSelectService }) {
               <button
                 type="button"
                 onClick={goToPrevious}
-                className="inline-flex h-11 w-11 items-center justify-center border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-colors duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] active:scale-[0.98]"
+                className="inline-flex h-11 w-11 items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] transition-colors duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] hover:text-white active:scale-[0.98]"
                 aria-label="Proyecto anterior"
               >
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -118,7 +127,7 @@ export default function ProjectsSlider({ onSelectService }) {
               <button
                 type="button"
                 onClick={goToNext}
-                className="inline-flex h-11 w-11 items-center justify-center border border-[#334155] bg-[#1E293B] text-[#F8FAFC] transition-colors duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] active:scale-[0.98]"
+                className="inline-flex h-11 w-11 items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] transition-colors duration-150 hover:border-[#EA580C] hover:bg-[#EA580C] hover:text-white active:scale-[0.98]"
                 aria-label="Proyecto siguiente"
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />
@@ -127,13 +136,14 @@ export default function ProjectsSlider({ onSelectService }) {
           </div>
         </Reveal>
 
-        {/* Contenedor del Slider con swipe táctil real */}
+        {/* Contenedor del Slider con swipe táctil real y touch-pan-y */}
         <Reveal delayMs={100} className="mt-10">
           <div
-            className="overflow-hidden border border-[#334155] bg-[#1E293B]"
+            className="touch-pan-y overflow-hidden border border-[#CBD5E1] bg-[#F8FAFC]"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onTouchCancel={resetTouchState}
             role="region"
             aria-roledescription="carrusel"
             aria-label="Galería de obras realizadas"
@@ -178,34 +188,34 @@ export default function ProjectsSlider({ onSelectService }) {
                   </div>
 
                   {/* Ficha técnica del proyecto */}
-                  <div className="flex flex-col justify-between border-t border-[#334155] p-6 sm:p-8 lg:col-span-5 lg:border-t-0 lg:border-l">
+                  <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-6 sm:p-8 lg:col-span-5 lg:border-t-0 lg:border-l">
                     <div>
                       <span
                         className={`inline-block px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${
                           project.featured
                             ? 'bg-[#EA580C] text-white'
-                            : 'border border-[#334155] bg-[#0F172A] text-[#EA580C]'
+                            : 'border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]'
                         }`}
                       >
                         {project.category}
                       </span>
 
-                      <h3 className="mt-4 font-display text-xl font-extrabold leading-tight tracking-[-0.02em] text-[#F8FAFC] sm:text-2xl">
+                      <h3 className="mt-4 font-display text-xl font-extrabold leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-2xl">
                         {project.title}
                       </h3>
 
                       {/* Metadatos técnicos */}
-                      <dl className="mt-5 grid grid-cols-1 gap-3 border-y border-[#334155] py-4 sm:grid-cols-2">
+                      <dl className="mt-5 grid grid-cols-1 gap-3 border-y border-[#CBD5E1] py-4 sm:grid-cols-2">
                         <div className="flex items-start gap-2.5">
                           <MapPin
                             className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
                             aria-hidden="true"
                           />
                           <div>
-                            <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-400">
+                            <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
                               Ubicación
                             </dt>
-                            <dd className="mt-0.5 text-sm font-medium text-slate-100">
+                            <dd className="mt-0.5 text-sm font-medium text-[#0F172A]">
                               {project.location}
                             </dd>
                           </div>
@@ -217,21 +227,21 @@ export default function ProjectsSlider({ onSelectService }) {
                             aria-hidden="true"
                           />
                           <div>
-                            <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-400">
+                            <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
                               Terminación
                             </dt>
-                            <dd className="mt-0.5 text-sm font-semibold text-slate-100">
+                            <dd className="mt-0.5 text-sm font-semibold text-[#0F172A]">
                               {project.execution}
                             </dd>
                           </div>
                         </div>
                       </dl>
 
-                      <p className="mt-5 text-sm leading-relaxed text-slate-300 sm:text-[15px]">
+                      <p className="mt-5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
                         {project.description}
                       </p>
 
-                      <p className="mt-4 border border-[#334155] bg-[#0F172A] px-3.5 py-2.5 text-xs font-medium text-slate-200">
+                      <p className="mt-4 border border-[#CBD5E1] bg-[#E2E8F0]/60 px-3.5 py-2.5 text-xs font-medium text-[#0F172A]">
                         {project.specHighlight}
                       </p>
                     </div>
@@ -246,7 +256,7 @@ export default function ProjectsSlider({ onSelectService }) {
                             detail: project.title,
                           })
                         }
-                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-[#EA580C] transition-colors hover:text-[#F8FAFC] active:scale-[0.98]"
+                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-[#EA580C] transition-colors hover:text-[#C2410C] active:scale-[0.98]"
                       >
                         <span>Cotizar una obra similar</span>
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -275,7 +285,7 @@ export default function ProjectsSlider({ onSelectService }) {
                   >
                     <span
                       className={`block h-2 transition-all duration-200 ${
-                        isActive ? 'w-8 bg-[#EA580C]' : 'w-3 bg-[#334155] hover:bg-slate-400'
+                        isActive ? 'w-8 bg-[#EA580C]' : 'w-3 bg-slate-400 hover:bg-[#0F172A]'
                       }`}
                     />
                   </button>
@@ -283,7 +293,7 @@ export default function ProjectsSlider({ onSelectService }) {
               })}
             </div>
 
-            <p className="text-xs text-slate-400">
+            <p className="text-xs font-medium text-slate-600">
               Tocá cualquier fotografía para verla completa en pantalla ampliada.
             </p>
           </div>

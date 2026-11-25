@@ -58,8 +58,8 @@ export function useScrollReveal({
     return () => observer.disconnect();
   }, [threshold, rootMargin, triggerOnce]);
 
-  const revealClassName = `transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[opacity,transform] ${
-    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+  const revealClassName = `transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 will-change-[opacity,transform]'
   }`;
 
   const revealStyle = delayMs > 0 ? { transitionDelay: `${delayMs}ms` } : undefined;

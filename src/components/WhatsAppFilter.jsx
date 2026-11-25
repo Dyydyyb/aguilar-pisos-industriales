@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Check, Copy, MapPin, X } from 'lucide-react';
+import { Check, Copy, Handshake, MapPin, X } from 'lucide-react';
 import Reveal from './Reveal';
 import WhatsAppIcon from './WhatsAppIcon';
 import {
+  ALLIANCE_SERVICE_OPTION,
   BUSINESS_INFO,
   WHATSAPP_AREA_OPTIONS,
+  WHATSAPP_SECTOR_OPTIONS,
   WHATSAPP_SERVICE_OPTIONS,
   buildWhatsAppQuoteMessage,
   buildWhatsAppUrl,
@@ -17,13 +19,17 @@ export default function WhatsAppFilter({
   onClearServiceDetail,
 }) {
   const [selectedArea, setSelectedArea] = useState(WHATSAPP_AREA_OPTIONS[1]);
+  const [selectedSector, setSelectedSector] = useState(WHATSAPP_SECTOR_OPTIONS[0]);
   const [zone, setZone] = useState('');
   const [copied, setCopied] = useState(false);
+
+  const isAllianceMode = selectedService === ALLIANCE_SERVICE_OPTION;
 
   const previewMessage = buildWhatsAppQuoteMessage({
     service: selectedService,
     serviceDetail: selectedServiceDetail,
     area: selectedArea,
+    sector: selectedSector,
     zone,
   });
 
@@ -50,8 +56,8 @@ export default function WhatsAppFilter({
             Armá tu Consulta Técnica en 3 Pasos
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-700">
-            Seleccioná las características principales de tu obra y enviá el detalle listo por
-            WhatsApp. Presupuestos y visitas técnicas 100% sin cargo.
+            Seleccioná las características principales de tu obra o consulta comercial y enviá el
+            detalle listo por WhatsApp. Presupuestos y visitas técnicas 100% sin cargo.
           </p>
         </Reveal>
 
@@ -61,7 +67,7 @@ export default function WhatsAppFilter({
             delayMs={80}
             className="border border-[#CBD5E1] bg-[#F8FAFC] p-5 sm:p-8 lg:col-span-7"
           >
-            {/* Paso 1: Tipo de obra / servicio */}
+            {/* Paso 1: Tipo de obra / alianza */}
             <fieldset>
               <legend className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg">
                 <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
@@ -73,6 +79,7 @@ export default function WhatsAppFilter({
               <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {WHATSAPP_SERVICE_OPTIONS.map((option) => {
                   const isActive = selectedService === option;
+                  const isAlliancePill = option === ALLIANCE_SERVICE_OPTION;
                   return (
                     <button
                       key={option}
@@ -80,12 +87,24 @@ export default function WhatsAppFilter({
                       aria-pressed={isActive}
                       onClick={() => onSelectServiceCategory(option)}
                       className={`flex min-h-[48px] items-center justify-between gap-2 border px-4 py-2.5 text-left text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                        isAlliancePill ? 'sm:col-span-2' : ''
+                      } ${
                         isActive
                           ? 'border-[#0F172A] bg-[#0F172A] text-[#F8FAFC]'
-                          : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
+                          : isAlliancePill
+                            ? 'border-[#94A3B8] bg-[#E2E8F0]/55 text-[#0F172A] hover:border-[#0F172A] hover:bg-white'
+                            : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
                       }`}
                     >
-                      <span>{option}</span>
+                      <span className="inline-flex items-center gap-2">
+                        {isAlliancePill && (
+                          <Handshake
+                            className="h-4 w-4 shrink-0 text-[#EA580C]"
+                            aria-hidden="true"
+                          />
+                        )}
+                        <span>{option}</span>
+                      </span>
                       <span
                         className={`h-2.5 w-2.5 shrink-0 ${
                           isActive ? 'bg-[#EA580C]' : 'border border-[#CBD5E1] bg-transparent'
@@ -97,7 +116,7 @@ export default function WhatsAppFilter({
                 })}
               </div>
 
-              {selectedServiceDetail && (
+              {selectedServiceDetail && !isAllianceMode && (
                 <div className="mt-3 flex items-center justify-between gap-3 border border-[#CBD5E1] bg-[#E2E8F0] px-3.5 py-2 text-xs text-[#0F172A]">
                   <span className="min-w-0 truncate">
                     <strong className="font-semibold">Servicio específico:</strong>{' '}
@@ -115,35 +134,61 @@ export default function WhatsAppFilter({
               )}
             </fieldset>
 
-            {/* Paso 2: Superficie estimada */}
-            <fieldset className="mt-8 border-t border-[#E2E8F0] pt-7">
+            {/* Paso 2: Dinámico — Superficie estimada (m²) o Rubro de tu empresa (B2B) */}
+            <fieldset
+              key={isAllianceMode ? 'step-2-b2b' : 'step-2-obra'}
+              className="animate-tab-panel mt-8 border-t border-[#E2E8F0] pt-7"
+            >
               <legend className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg">
                 <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
                   2
                 </span>
-                <span>Superficie estimada (m²)</span>
+                <span>{isAllianceMode ? 'Rubro de tu empresa' : 'Superficie estimada (m²)'}</span>
               </legend>
 
-              <div className="mt-4 flex flex-wrap gap-2.5">
-                {WHATSAPP_AREA_OPTIONS.map((areaOption) => {
-                  const isActive = selectedArea === areaOption;
-                  return (
-                    <button
-                      key={areaOption}
-                      type="button"
-                      aria-pressed={isActive}
-                      onClick={() => setSelectedArea(areaOption)}
-                      className={`tabular-nums inline-flex min-h-[44px] items-center justify-center border px-4 py-2 text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
-                        isActive
-                          ? 'border-[#EA580C] bg-[#EA580C] text-white'
-                          : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
-                      }`}
-                    >
-                      {areaOption}
-                    </button>
-                  );
-                })}
-              </div>
+              {isAllianceMode ? (
+                <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {WHATSAPP_SECTOR_OPTIONS.map((sectorOption) => {
+                    const isActive = selectedSector === sectorOption;
+                    return (
+                      <button
+                        key={sectorOption}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() => setSelectedSector(sectorOption)}
+                        className={`inline-flex min-h-[44px] items-center justify-center border px-4 py-2 text-center text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                          isActive
+                            ? 'border-[#EA580C] bg-[#EA580C] text-white'
+                            : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
+                        }`}
+                      >
+                        {sectorOption}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="mt-4 flex flex-wrap gap-2.5">
+                  {WHATSAPP_AREA_OPTIONS.map((areaOption) => {
+                    const isActive = selectedArea === areaOption;
+                    return (
+                      <button
+                        key={areaOption}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() => setSelectedArea(areaOption)}
+                        className={`tabular-nums inline-flex min-h-[44px] items-center justify-center border px-4 py-2 text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                          isActive
+                            ? 'border-[#EA580C] bg-[#EA580C] text-white'
+                            : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
+                        }`}
+                      >
+                        {areaOption}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </fieldset>
 
             {/* Paso 3: Localidad / Zona */}
@@ -155,7 +200,11 @@ export default function WhatsAppFilter({
                 <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
                   3
                 </span>
-                <span>Localidad / Zona de la obra</span>
+                <span>
+                  {isAllianceMode
+                    ? 'Localidad / Zona de tu empresa'
+                    : 'Localidad / Zona de la obra'}
+                </span>
               </label>
 
               <div className="relative mt-4">
@@ -195,7 +244,7 @@ export default function WhatsAppFilter({
               </div>
               <span className="inline-flex items-center gap-1.5 border border-[#334155] bg-[#1E293B] px-2.5 py-1 text-[11px] font-semibold text-slate-200">
                 <span className="h-2 w-2 bg-[#EA580C]" aria-hidden="true" />
-                En vivo
+                {isAllianceMode ? 'Alianza B2B' : 'En vivo'}
               </span>
             </div>
 
@@ -210,13 +259,15 @@ export default function WhatsAppFilter({
             {/* Resumen técnico compacto */}
             <dl className="mt-5 space-y-2 border-b border-[#334155] pb-5 text-xs">
               <div className="flex items-baseline justify-between gap-3">
-                <dt className="text-slate-400">Servicio</dt>
+                <dt className="text-slate-400">{isAllianceMode ? 'Motivo' : 'Servicio'}</dt>
                 <dd className="text-right font-medium text-slate-100">{selectedService}</dd>
               </div>
               <div className="flex items-baseline justify-between gap-3">
-                <dt className="text-slate-400">Superficie aprox.</dt>
+                <dt className="text-slate-400">
+                  {isAllianceMode ? 'Rubro' : 'Superficie aprox.'}
+                </dt>
                 <dd className="tabular-nums text-right font-medium text-slate-100">
-                  {selectedArea}
+                  {isAllianceMode ? selectedSector : selectedArea}
                 </dd>
               </div>
               <div className="flex items-baseline justify-between gap-3">
@@ -236,7 +287,11 @@ export default function WhatsAppFilter({
                 className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 bg-[#EA580C] px-5 py-3 text-center text-sm font-bold text-white transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98] sm:text-base"
               >
                 <WhatsAppIcon className="h-5 w-5 shrink-0" />
-                <span>Enviar Consulta por WhatsApp (Sin Cargo)</span>
+                <span>
+                  {isAllianceMode
+                    ? 'Enviar Consulta de Alianza por WhatsApp'
+                    : 'Enviar Consulta por WhatsApp (Sin Cargo)'}
+                </span>
               </a>
 
               <button

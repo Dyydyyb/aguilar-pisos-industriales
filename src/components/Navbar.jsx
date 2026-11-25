@@ -47,7 +47,7 @@ export default function Navbar() {
         </a>
 
         {/* Navegación Desktop */}
-        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-8">
+        <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-5 xl:gap-8">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
@@ -60,7 +60,7 @@ export default function Navbar() {
         </nav>
 
         {/* Acciones Desktop */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2.5 xl:gap-3">
           <a
             href={quickWhatsAppHref}
             target="_blank"
@@ -74,7 +74,7 @@ export default function Navbar() {
 
           <a
             href="#cotizador"
-            className="inline-flex min-h-[44px] items-center justify-center bg-[#EA580C] px-5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98]"
+            className="inline-flex min-h-[44px] items-center justify-center bg-[#EA580C] px-4 xl:px-5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98]"
           >
             Cotizar Sin Cargo
           </a>

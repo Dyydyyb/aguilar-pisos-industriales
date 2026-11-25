@@ -18,7 +18,8 @@ src/
 │   ├── Hero.jsx             # Hero full-viewport con indicadores técnicos
 │   ├── Services.jsx         # Tabs interactivos (Pisos / Arquitectura) conectados al cotizador
 │   ├── ProjectsSlider.jsx   # Slider con swipe táctil real + Lightbox modal
-│   ├── WhatsAppFilter.jsx   # Filtro de 3 pasos con vista previa y link dinámico a WhatsApp
+│   ├── Alliances.jsx        # Bloque B2B de alianzas con corralones, hormigoneras y estudios
+│   ├── WhatsAppFilter.jsx   # Filtro de 3 pasos (obra y alianza B2B) con vista previa y link a WhatsApp
 │   ├── ContactForm.jsx      # Formulario formal con validación y envío rápido a WhatsApp
 │   ├── Footer.jsx           # Pie institucional oscuro
 │   ├── FloatingWhatsApp.jsx # Acceso flotante a WhatsApp

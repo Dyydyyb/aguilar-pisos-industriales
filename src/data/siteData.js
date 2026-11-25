@@ -1,6 +1,5 @@
 /**
  * Fuente única de datos para Aguilar Pisos Industriales.
- * Reemplazá las rutas en `projectsData` por tus fotografías reales en `/public/images/`.
  */
 
 export const BUSINESS_INFO = {
@@ -21,6 +20,7 @@ export const BUSINESS_INFO = {
 export const NAV_LINKS = [
   { label: 'Servicios', href: '#servicios' },
   { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Alianzas', href: '#alianzas' },
   { label: 'Cotizador', href: '#cotizador' },
   { label: 'Contacto', href: '#contacto' },
 ];
@@ -49,11 +49,14 @@ export const HERO_INDICATORS = [
 /**
  * Opciones del Filtro Inteligente de WhatsApp
  */
+export const ALLIANCE_SERVICE_OPTION = 'Alianza Corralón / Proveedor';
+
 export const WHATSAPP_SERVICE_OPTIONS = [
   'Piso Industrial / Galpón',
   'Entrada / Playón Vehicular',
   'Arquitectura y Construcción',
   'Otro / Asesoramiento',
+  ALLIANCE_SERVICE_OPTION,
 ];
 
 export const WHATSAPP_AREA_OPTIONS = [
@@ -63,6 +66,43 @@ export const WHATSAPP_AREA_OPTIONS = [
   'Más de 1.500 m²',
   'No lo sé aún',
 ];
+
+export const WHATSAPP_SECTOR_OPTIONS = [
+  'Corralón de Materiales',
+  'Hormigonera',
+  'Estudio de Arquitectura / Constructora',
+  'Otro',
+];
+
+/**
+ * Alianzas Estratégicas B2B (Corralones, Hormigoneras y Estudios)
+ */
+export const ALLIANCE_PILLARS = [
+  {
+    id: 'cero-reclamos',
+    title: 'Cero Reclamos por Mala Colocación',
+    description:
+      'El mejor hormigón falla si no se nivela, llanea y cura correctamente. Nuestra ejecución bajo dirección de Maestro Mayor de Obras garantiza que tus materiales rindan al máximo.',
+    icon: 'shield',
+  },
+  {
+    id: 'derivacion-mutua',
+    title: 'Derivación Mutua de Ventas',
+    description:
+      'A los clientes que captamos por nuestra cuenta les derivamos la compra de hormigón elaborado, mallas, endurecedores y áridos directamente a nuestros corralones aliados.',
+    icon: 'repeat',
+  },
+  {
+    id: 'presupuestos-rapidos',
+    title: 'Presupuestos Rápidos en 24/48 hs',
+    description:
+      'Relevamiento técnico en obra sin cargo en Florencio Varela y toda Zona Sur para que tu cliente cierre la compra de materiales cuanto antes.',
+    icon: 'clock',
+  },
+];
+
+export const ALLIANCE_DIRECT_WHATSAPP_MESSAGE =
+  'Hola Aguilar Pisos Industriales, ¿cómo están? Me comunico desde un corralón / empresa del rubro para conversar sobre una alianza comercial de recomendación de obras y materiales en Zona Sur.';
 
 /**
  * Catálogo de servicios dividido en dos divisiones técnicas.
@@ -236,14 +276,22 @@ export const FORM_SERVICE_OPTIONS = [
   'Construcción de Galpón / Nave Llave en Mano',
   'Movimiento de Suelos y Platea de Fundación',
   'Remodelación Industrial / Obra Civil Integral',
+  'Alianza Comercial (Corralón / Hormigonera / Estudio)',
   'Otro / Asesoramiento Técnico',
 ];
 
 /**
- * Construye el texto exacto y la URL codificada para WhatsApp.
+ * Construye el texto exacto y la URL codificada para WhatsApp (cliente final o alianza B2B).
  */
-export function buildWhatsAppQuoteMessage({ service, serviceDetail, area, zone }) {
-  const cleanZone = zone && zone.trim().length > 0 ? zone.trim() : 'A confirmar (Buenos Aires / Zona Sur)';
+export function buildWhatsAppQuoteMessage({ service, serviceDetail, area, sector, zone }) {
+  const cleanZone =
+    zone && zone.trim().length > 0 ? zone.trim() : 'A confirmar (Buenos Aires / Zona Sur)';
+
+  if (service === ALLIANCE_SERVICE_OPTION) {
+    const cleanSector = sector || WHATSAPP_SECTOR_OPTIONS[0];
+    return `Hola Aguilar Pisos Industriales, ¿cómo están? Me comunico para conversar sobre una alianza comercial de recomendación de obras y materiales en Zona Sur. • Rubro: ${cleanSector} • Zona: ${cleanZone}. ¡Espero su respuesta!`;
+  }
+
   const formattedService =
     serviceDetail && serviceDetail.trim().length > 0
       ? `${service} (${serviceDetail.trim()})`

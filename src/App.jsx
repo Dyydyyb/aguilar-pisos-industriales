@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import ProjectsSlider from './components/ProjectsSlider';
+import Alliances from './components/Alliances';
 import WhatsAppFilter from './components/WhatsAppFilter';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
@@ -36,6 +37,7 @@ export default function App() {
         <Hero />
         <Services onSelectService={handleSelectServiceFromCatalog} />
         <ProjectsSlider onSelectService={handleSelectServiceFromCatalog} />
+        <Alliances />
         <WhatsAppFilter
           selectedService={selectedService}
           selectedServiceDetail={selectedServiceDetail}
