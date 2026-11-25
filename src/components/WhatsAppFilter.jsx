@@ -1,0 +1,265 @@
+import { useState } from 'react';
+import { Check, Copy, MapPin, X } from 'lucide-react';
+import Reveal from './Reveal';
+import WhatsAppIcon from './WhatsAppIcon';
+import {
+  BUSINESS_INFO,
+  WHATSAPP_AREA_OPTIONS,
+  WHATSAPP_SERVICE_OPTIONS,
+  buildWhatsAppQuoteMessage,
+  buildWhatsAppUrl,
+} from '../data/siteData';
+
+export default function WhatsAppFilter({
+  selectedService,
+  selectedServiceDetail,
+  onSelectServiceCategory,
+  onClearServiceDetail,
+}) {
+  const [selectedArea, setSelectedArea] = useState(WHATSAPP_AREA_OPTIONS[1]);
+  const [zone, setZone] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const previewMessage = buildWhatsAppQuoteMessage({
+    service: selectedService,
+    serviceDetail: selectedServiceDetail,
+    area: selectedArea,
+    zone,
+  });
+
+  const whatsappHref = buildWhatsAppUrl(previewMessage);
+
+  const handleCopyMessage = async () => {
+    try {
+      await navigator.clipboard.writeText(previewMessage);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2200);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <section
+      id="cotizador"
+      className="border-b border-[#CBD5E1] bg-[#E2E8F0] py-20 sm:py-24 lg:py-28"
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal className="max-w-3xl">
+          <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-[#0F172A] text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
+            Armá tu Consulta Técnica en 3 Pasos
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-slate-700">
+            Seleccioná las características principales de tu obra y enviá el detalle listo por
+            WhatsApp. Presupuestos y visitas técnicas 100% sin cargo.
+          </p>
+        </Reveal>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-start lg:gap-8">
+          {/* Panel configurador interactivo (izquierda) */}
+          <Reveal
+            delayMs={80}
+            className="border border-[#CBD5E1] bg-[#F8FAFC] p-5 sm:p-8 lg:col-span-7"
+          >
+            {/* Paso 1: Tipo de obra / servicio */}
+            <fieldset>
+              <legend className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg">
+                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
+                  1
+                </span>
+                <span>¿Qué necesitás construir?</span>
+              </legend>
+
+              <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                {WHATSAPP_SERVICE_OPTIONS.map((option) => {
+                  const isActive = selectedService === option;
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      aria-pressed={isActive}
+                      onClick={() => onSelectServiceCategory(option)}
+                      className={`flex min-h-[48px] items-center justify-between gap-2 border px-4 py-2.5 text-left text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                        isActive
+                          ? 'border-[#0F172A] bg-[#0F172A] text-[#F8FAFC]'
+                          : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
+                      }`}
+                    >
+                      <span>{option}</span>
+                      <span
+                        className={`h-2.5 w-2.5 shrink-0 ${
+                          isActive ? 'bg-[#EA580C]' : 'border border-[#CBD5E1] bg-transparent'
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+
+              {selectedServiceDetail && (
+                <div className="mt-3 flex items-center justify-between gap-3 border border-[#CBD5E1] bg-[#E2E8F0] px-3.5 py-2 text-xs text-[#0F172A]">
+                  <span className="min-w-0 truncate">
+                    <strong className="font-semibold">Servicio específico:</strong>{' '}
+                    {selectedServiceDetail}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={onClearServiceDetail}
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-[#CBD5E1] bg-[#F8FAFC] text-slate-700 transition-colors hover:border-[#0F172A] hover:text-[#0F172A]"
+                    aria-label="Quitar servicio específico"
+                  >
+                    <X className="h-3.5 w-3.5" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+            </fieldset>
+
+            {/* Paso 2: Superficie estimada */}
+            <fieldset className="mt-8 border-t border-[#E2E8F0] pt-7">
+              <legend className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg">
+                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
+                  2
+                </span>
+                <span>Superficie estimada (m²)</span>
+              </legend>
+
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                {WHATSAPP_AREA_OPTIONS.map((areaOption) => {
+                  const isActive = selectedArea === areaOption;
+                  return (
+                    <button
+                      key={areaOption}
+                      type="button"
+                      aria-pressed={isActive}
+                      onClick={() => setSelectedArea(areaOption)}
+                      className={`tabular-nums inline-flex min-h-[44px] items-center justify-center border px-4 py-2 text-sm font-semibold transition-colors duration-150 active:scale-[0.98] ${
+                        isActive
+                          ? 'border-[#EA580C] bg-[#EA580C] text-white'
+                          : 'border-[#CBD5E1] bg-white text-[#0F172A] hover:border-[#0F172A]'
+                      }`}
+                    >
+                      {areaOption}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            {/* Paso 3: Localidad / Zona */}
+            <div className="mt-8 border-t border-[#E2E8F0] pt-7">
+              <label
+                htmlFor="obra-zona"
+                className="flex items-center gap-3 font-display text-base font-bold text-[#0F172A] sm:text-lg"
+              >
+                <span className="tabular-nums inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#0F172A] text-xs font-extrabold text-[#F8FAFC]">
+                  3
+                </span>
+                <span>Localidad / Zona de la obra</span>
+              </label>
+
+              <div className="relative mt-4">
+                <MapPin
+                  className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-500"
+                  aria-hidden="true"
+                />
+                <input
+                  id="obra-zona"
+                  type="text"
+                  value={zone}
+                  onChange={(event) => setZone(event.target.value)}
+                  placeholder="Ej: Quilmes, Florencio Varela, Ezeiza, Avellaneda..."
+                  autoComplete="address-level2"
+                  className="min-h-[48px] w-full border border-[#CBD5E1] bg-white py-3 pr-4 pl-10 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:border-[#EA580C] focus:outline-none sm:text-base"
+                />
+              </div>
+              <p className="mt-2 text-xs text-slate-600">
+                Cobertura directa en {BUSINESS_INFO.coverage}.
+              </p>
+            </div>
+          </Reveal>
+
+          {/* Vista previa en vivo y envío a WhatsApp (derecha) */}
+          <Reveal
+            delayMs={160}
+            className="border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC] sm:p-8 lg:sticky lg:top-[96px] lg:col-span-5"
+          >
+            <div className="flex items-center justify-between gap-3 border-b border-[#334155] pb-4">
+              <div>
+                <h3 className="font-display text-base font-bold text-[#F8FAFC]">
+                  Vista previa del mensaje
+                </h3>
+                <p className="tabular-nums mt-0.5 text-xs text-slate-300">
+                  Destino: WhatsApp {BUSINESS_INFO.phoneDisplay}
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 border border-[#334155] bg-[#1E293B] px-2.5 py-1 text-[11px] font-semibold text-slate-200">
+                <span className="h-2 w-2 bg-[#EA580C]" aria-hidden="true" />
+                En vivo
+              </span>
+            </div>
+
+            {/* Recuadro de mensaje generado */}
+            <div
+              aria-live="polite"
+              className="mt-5 border border-[#334155] bg-[#1E293B] p-4 sm:p-5"
+            >
+              <p className="text-sm leading-relaxed text-slate-100">{previewMessage}</p>
+            </div>
+
+            {/* Resumen técnico compacto */}
+            <dl className="mt-5 space-y-2 border-b border-[#334155] pb-5 text-xs">
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-slate-400">Servicio</dt>
+                <dd className="text-right font-medium text-slate-100">{selectedService}</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-slate-400">Superficie aprox.</dt>
+                <dd className="tabular-nums text-right font-medium text-slate-100">
+                  {selectedArea}
+                </dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-slate-400">Zona</dt>
+                <dd className="text-right font-medium text-slate-100">
+                  {zone.trim() ? zone.trim() : 'A confirmar'}
+                </dd>
+              </div>
+            </dl>
+
+            {/* Botón principal de conversión */}
+            <div className="mt-6 flex flex-col gap-3">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 bg-[#EA580C] px-5 py-3 text-center text-sm font-bold text-white transition-colors duration-150 hover:bg-[#C2410C] active:scale-[0.98] sm:text-base"
+              >
+                <WhatsAppIcon className="h-5 w-5 shrink-0" />
+                <span>Enviar Consulta por WhatsApp (Sin Cargo)</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={handleCopyMessage}
+                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 border border-[#334155] bg-[#1E293B] px-4 text-xs font-semibold text-slate-200 transition-colors hover:border-slate-400 hover:text-white active:scale-[0.98]"
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
+                    <span>Mensaje copiado al portapapeles</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-4 w-4 text-slate-400" aria-hidden="true" />
+                    <span>Copiar texto del mensaje</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
