@@ -89,16 +89,16 @@ export default function ProjectsSlider({ onSelectService }) {
   return (
     <section
       id="proyectos"
-      className="border-b border-[#CBD5E1] bg-[#E2E8F0] py-20 text-[#0F172A] sm:py-24 lg:py-28"
+      className="border-b border-[#CBD5E1] bg-[#E2E8F0] py-12 text-[#0F172A] sm:py-20 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Encabezado y controles del slider */}
-        <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-[#0F172A] text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
+            <h2 className="font-display text-2xl font-extrabold tracking-[-0.03em] text-[#0F172A] text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
               Obras Realizadas en Campo
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-700">
+            <p className="mt-2.5 sm:mt-4 text-sm leading-relaxed text-slate-700 sm:text-base">
               Trabajos reales en pisos industriales, playones cívicos, sendas, hormigón pigmentado
               y accesos de camiones ejecutados en Florencio Varela y Buenos Aires Zona Sur.
             </p>
@@ -135,7 +135,7 @@ export default function ProjectsSlider({ onSelectService }) {
         </Reveal>
 
         {/* Contenedor principal redondeado del Slider */}
-        <Reveal variant="scale" delayMs={100} className="mt-10">
+        <Reveal variant="scale" delayMs={100} className="mt-6 sm:mt-10">
           <div
             className="touch-pan-y overflow-hidden rounded-2xl border border-[#CBD5E1] bg-[#F8FAFC]"
             onTouchStart={handleTouchStart}
@@ -158,13 +158,13 @@ export default function ProjectsSlider({ onSelectService }) {
                     className="grid w-full shrink-0 grid-cols-1 lg:grid-cols-12"
                     aria-hidden={!isActiveSlide}
                   >
-                    {/* Fotografía: proporción casi cuadrada en PC (50/50) para evitar recortes y franjas vacías */}
+                    {/* Fotografía: 4:3 compacto en móvil y 50/50 altura completa en PC */}
                     <div className="relative bg-[#0F172A] lg:col-span-6">
                       <button
                         type="button"
                         onClick={() => setLightboxIndex(index)}
                         tabIndex={isActiveSlide ? 0 : -1}
-                        className="group relative block w-full aspect-square sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[540px] overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#EA580C]"
+                        className="group relative block w-full aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[540px] overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#EA580C]"
                         aria-label={`Ampliar fotografía de ${project.title}`}
                       >
                         <img
@@ -178,11 +178,11 @@ export default function ProjectsSlider({ onSelectService }) {
                           }`}
                         />
                         {project.featured && (
-                          <span className="absolute top-3.5 left-3.5 inline-flex items-center gap-2 rounded-full bg-[#EA580C] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-white">
+                          <span className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 inline-flex items-center gap-2 rounded-full bg-[#EA580C] px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-[0.08em] text-white">
                             Obra Principal
                           </span>
                         )}
-                        <span className="absolute right-3.5 bottom-3.5 inline-flex min-h-[40px] items-center gap-2 rounded-xl border border-[#334155] bg-[#0F172A]/95 px-3.5 py-1.5 text-xs font-semibold text-[#F8FAFC] transition-colors group-hover:border-[#EA580C] group-hover:bg-[#EA580C]">
+                        <span className="absolute right-3 bottom-3 sm:right-3.5 sm:bottom-3.5 inline-flex min-h-[38px] sm:min-h-[40px] items-center gap-2 rounded-xl border border-[#334155] bg-[#0F172A]/95 px-3 py-1.5 text-xs font-semibold text-[#F8FAFC] transition-colors group-hover:border-[#EA580C] group-hover:bg-[#EA580C]">
                           <Expand className="h-3.5 w-3.5" aria-hidden="true" />
                           <span>Ver completa</span>
                         </span>
@@ -190,10 +190,10 @@ export default function ProjectsSlider({ onSelectService }) {
                     </div>
 
                     {/* Ficha técnica del proyecto */}
-                    <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-6 sm:p-8 lg:col-span-6 lg:border-t-0 lg:border-l">
+                    <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-4 sm:p-8 lg:col-span-6 lg:border-t-0 lg:border-l">
                       <div>
                         <span
-                          className={`inline-block rounded-full px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${
+                          className={`inline-block rounded-full px-3 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.08em] ${
                             project.featured
                               ? 'bg-[#EA580C] text-white'
                               : 'border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]'
@@ -202,53 +202,53 @@ export default function ProjectsSlider({ onSelectService }) {
                           {project.category}
                         </span>
 
-                        <h3 className="mt-4 font-display text-xl font-extrabold leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-2xl">
+                        <h3 className="mt-3 sm:mt-4 font-display text-lg font-extrabold leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-2xl">
                           {project.title}
                         </h3>
 
-                        {/* Metadatos técnicos */}
-                        <dl className="mt-5 grid grid-cols-1 gap-3 border-y border-[#CBD5E1] py-4 sm:grid-cols-2">
-                          <div className="flex items-start gap-2.5">
+                        {/* Metadatos lado a lado incluso en móvil */}
+                        <dl className="mt-4 sm:mt-5 grid grid-cols-2 gap-3 border-y border-[#CBD5E1] py-3 sm:py-4">
+                          <div className="flex items-start gap-2">
                             <MapPin
                               className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
                               aria-hidden="true"
                             />
-                            <div>
-                              <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
+                            <div className="min-w-0">
+                              <dt className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
                                 Ubicación
                               </dt>
-                              <dd className="mt-0.5 text-sm font-medium text-[#0F172A]">
+                              <dd className="mt-0.5 text-xs sm:text-sm font-medium text-[#0F172A]">
                                 {project.location}
                               </dd>
                             </div>
                           </div>
 
-                          <div className="flex items-start gap-2.5">
+                          <div className="flex items-start gap-2">
                             <Layers
                               className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
                               aria-hidden="true"
                             />
-                            <div>
-                              <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
+                            <div className="min-w-0">
+                              <dt className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.08em] text-slate-500">
                                 Terminación
                               </dt>
-                              <dd className="mt-0.5 text-sm font-semibold text-[#0F172A]">
+                              <dd className="mt-0.5 text-xs sm:text-sm font-semibold text-[#0F172A]">
                                 {project.execution}
                               </dd>
                             </div>
                           </div>
                         </dl>
 
-                        <p className="mt-5 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                        <p className="mt-3.5 sm:mt-5 text-xs sm:text-[15px] leading-relaxed text-slate-700">
                           {project.description}
                         </p>
 
-                        <p className="mt-4 rounded-xl border border-[#CBD5E1] bg-[#E2E8F0]/60 px-3.5 py-2.5 text-xs font-medium text-[#0F172A]">
+                        <p className="mt-3 sm:mt-4 rounded-xl border border-[#CBD5E1] bg-[#E2E8F0]/60 px-3 py-2 sm:px-3.5 sm:py-2.5 text-[11px] sm:text-xs font-medium text-[#0F172A]">
                           {project.specHighlight}
                         </p>
                       </div>
 
-                      <div className="mt-7 pt-2">
+                      <div className="mt-4 sm:mt-7 pt-1 sm:pt-2">
                         <button
                           type="button"
                           tabIndex={isActiveSlide ? 0 : -1}
@@ -274,9 +274,9 @@ export default function ProjectsSlider({ onSelectService }) {
             </div>
           </div>
 
-          {/* Grilla redondeada de miniaturas / selector rápido (orden exacto con Acceso de Camiones última) */}
+          {/* Tira horizontal de miniaturas en móvil, 4 columnas en tablet/desktop */}
           <div
-            className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4"
+            className="no-scrollbar mt-3.5 sm:mt-4 flex gap-2.5 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-4 sm:gap-3 sm:overflow-visible"
             role="tablist"
             aria-label="Seleccionar proyecto"
           >
@@ -290,7 +290,7 @@ export default function ProjectsSlider({ onSelectService }) {
                   aria-selected={isActive}
                   aria-label={`Ver proyecto ${index + 1}: ${project.title}`}
                   onClick={() => setCurrentIndex(index)}
-                  className={`group flex items-center gap-3 rounded-xl border p-2 text-left transition-[transform,border-color,background-color] duration-200 active:scale-[0.97] ${
+                  className={`group flex w-[48vw] max-w-[195px] shrink-0 snap-start items-center gap-2.5 rounded-xl border p-2 text-left transition-[transform,border-color,background-color] duration-200 active:scale-[0.97] sm:w-auto sm:max-w-none sm:gap-3 ${
                     isActive
                       ? 'border-[#EA580C] bg-[#0F172A] text-[#F8FAFC]'
                       : 'border-[#CBD5E1] bg-[#F8FAFC] text-[#0F172A] hover:-translate-y-0.5 hover:border-slate-400'
@@ -300,13 +300,13 @@ export default function ProjectsSlider({ onSelectService }) {
                     src={project.image}
                     alt=""
                     aria-hidden="true"
-                    className={`h-11 w-11 shrink-0 rounded-lg object-cover ${
+                    className={`h-10 w-10 sm:h-11 sm:w-11 shrink-0 rounded-lg object-cover ${
                       project.imagePosition || 'object-center'
                     }`}
                   />
                   <span className="min-w-0">
                     <span
-                      className={`tabular-nums block text-[11px] font-semibold ${
+                      className={`tabular-nums block text-[10px] sm:text-[11px] font-semibold ${
                         isActive ? 'text-[#EA580C]' : 'text-slate-500'
                       }`}
                     >
@@ -336,7 +336,6 @@ export default function ProjectsSlider({ onSelectService }) {
             className="animate-lightbox relative w-full max-w-5xl overflow-hidden rounded-2xl border border-[#334155] bg-[#0F172A]"
             onClick={(event) => event.stopPropagation()}
           >
-            {/* Barra superior del Lightbox */}
             <div className="flex items-center justify-between gap-4 border-b border-[#334155] px-4 py-3 sm:px-6">
               <div className="min-w-0">
                 <p className="truncate font-display text-sm font-bold text-[#F8FAFC] sm:text-base">
@@ -357,7 +356,6 @@ export default function ProjectsSlider({ onSelectService }) {
               </button>
             </div>
 
-            {/* Imagen ampliada */}
             <div className="relative bg-slate-950">
               <img
                 src={activeLightboxProject.image}
@@ -365,7 +363,6 @@ export default function ProjectsSlider({ onSelectService }) {
                 className="max-h-[72vh] w-full object-contain"
               />
 
-              {/* Navegación dentro del Lightbox */}
               <button
                 type="button"
                 onClick={() =>
@@ -389,7 +386,6 @@ export default function ProjectsSlider({ onSelectService }) {
               </button>
             </div>
 
-            {/* Pie del Lightbox */}
             <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#334155] px-4 py-3 text-xs text-slate-300 sm:px-6">
               <span>{activeLightboxProject.specHighlight}</span>
               <span className="tabular-nums text-slate-400">

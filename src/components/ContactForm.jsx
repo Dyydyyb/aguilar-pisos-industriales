@@ -120,54 +120,55 @@ export default function ContactForm() {
     : '#';
 
   const inputBaseClass =
-    'min-h-[48px] w-full rounded-xl border bg-[#F8FAFC] px-3.5 py-2.5 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px]';
+    'min-h-[46px] sm:min-h-[48px] w-full rounded-xl border bg-[#F8FAFC] px-3.5 py-2.5 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px]';
 
   return (
     <section
       id="contacto"
-      className="border-b border-[#CBD5E1] bg-[#F8FAFC] py-20 sm:py-24 lg:py-28"
+      className="border-b border-[#CBD5E1] bg-[#F8FAFC] py-12 sm:py-20 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-          {/* Información técnica y contacto directo (izquierda) */}
+        <div className="grid grid-cols-1 gap-6 sm:gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* Información técnica y contacto directo (izquierda en desktop, riel horizontal compacto en móvil) */}
           <Reveal className="flex flex-col justify-between lg:col-span-5">
             <div>
-              <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-[#0F172A] text-balance sm:text-4xl">
+              <h2 className="font-display text-2xl font-extrabold tracking-[-0.03em] text-[#0F172A] text-balance sm:text-4xl">
                 Solicitud Formal de Cotización
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-600">
+              <p className="mt-2.5 sm:mt-4 text-sm sm:text-base leading-relaxed text-slate-600">
                 Canal escrito para empresas, estudios de arquitectura, constructoras o clientes que
                 prefieren dejar las especificaciones técnicas de su obra.
               </p>
 
-              <div className="mt-8 overflow-hidden rounded-2xl border border-[#CBD5E1] bg-white divide-y divide-[#E2E8F0]">
+              {/* Riel horizontal deslizable en celulares, lista vertical en desktop */}
+              <div className="no-scrollbar mt-5 sm:mt-8 flex gap-2.5 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 lg:mx-0 lg:px-0 lg:block lg:overflow-hidden lg:rounded-2xl lg:border lg:border-[#CBD5E1] lg:bg-white lg:divide-y lg:divide-[#E2E8F0]">
                 <a
                   href={BUSINESS_INFO.phoneHref}
-                  className="flex min-h-[68px] items-center gap-4 px-5 py-4 transition-colors hover:bg-[#F8FAFC]"
+                  className="flex min-w-[225px] shrink-0 snap-start items-center gap-3 rounded-xl border border-[#CBD5E1] bg-white px-3.5 py-3 transition-colors hover:bg-[#F8FAFC] lg:min-h-[68px] lg:min-w-0 lg:gap-4 lg:rounded-none lg:border-0 lg:px-5 lg:py-4"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
+                  <span className="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
                     <Phone className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
                   </span>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.08em] text-slate-500">
+                  <div className="min-w-0">
+                    <p className="text-[10px] lg:text-xs font-medium uppercase tracking-[0.08em] text-slate-500">
                       Teléfono / WhatsApp
                     </p>
-                    <p className="tabular-nums mt-0.5 text-base font-semibold text-[#0F172A]">
+                    <p className="tabular-nums mt-0.5 text-sm lg:text-base font-semibold text-[#0F172A]">
                       {BUSINESS_INFO.phoneDisplay}
                     </p>
                   </div>
                 </a>
 
-                <div className="flex min-h-[68px] items-center gap-4 px-5 py-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
+                <div className="flex min-w-[235px] shrink-0 snap-start items-center gap-3 rounded-xl border border-[#CBD5E1] bg-white px-3.5 py-3 lg:min-h-[68px] lg:min-w-0 lg:gap-4 lg:rounded-none lg:border-0 lg:px-5 lg:py-4">
+                  <span className="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
                     <MapPin className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
                   </span>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.08em] text-slate-500">
+                  <div className="min-w-0">
+                    <p className="text-[10px] lg:text-xs font-medium uppercase tracking-[0.08em] text-slate-500">
                       Cobertura de obra
                     </p>
-                    <p className="mt-0.5 text-base font-semibold text-[#0F172A]">
-                      {BUSINESS_INFO.coverage}
+                    <p className="mt-0.5 text-sm lg:text-base font-semibold text-[#0F172A]">
+                      {BUSINESS_INFO.location} y AMBA
                     </p>
                   </div>
                 </div>
@@ -176,16 +177,16 @@ export default function ContactForm() {
                   href={BUSINESS_INFO.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex min-h-[68px] items-center gap-4 px-5 py-4 transition-colors hover:bg-[#F8FAFC]"
+                  className="flex min-w-[235px] shrink-0 snap-start items-center gap-3 rounded-xl border border-[#CBD5E1] bg-white px-3.5 py-3 transition-colors hover:bg-[#F8FAFC] lg:min-h-[68px] lg:min-w-0 lg:gap-4 lg:rounded-none lg:border-0 lg:px-5 lg:py-4"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
+                  <span className="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#0F172A]">
                     <Instagram className="h-4 w-4 text-[#EA580C]" aria-hidden="true" />
                   </span>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.08em] text-slate-500">
-                      Seguimiento de obras en Instagram
+                  <div className="min-w-0">
+                    <p className="text-[10px] lg:text-xs font-medium uppercase tracking-[0.08em] text-slate-500">
+                      Instagram
                     </p>
-                    <p className="mt-0.5 text-base font-semibold text-[#0F172A]">
+                    <p className="mt-0.5 truncate text-sm lg:text-base font-semibold text-[#0F172A]">
                       {BUSINESS_INFO.instagramHandle}
                     </p>
                   </div>
@@ -193,7 +194,7 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC]">
+            <div className="hidden lg:block mt-6 rounded-2xl border border-[#334155] bg-[#0F172A] p-5 text-[#F8FAFC]">
               <div className="flex items-start gap-3.5">
                 <ClipboardCheck
                   className="mt-0.5 h-5 w-5 shrink-0 text-[#EA580C]"
@@ -216,15 +217,15 @@ export default function ContactForm() {
           <Reveal
             variant="scale"
             delayMs={100}
-            className="rounded-2xl border border-[#CBD5E1] bg-white p-6 sm:p-8 lg:col-span-7"
+            className="rounded-2xl border border-[#CBD5E1] bg-white p-5 sm:p-8 lg:col-span-7"
           >
             {submittedData ? (
-              <div className="animate-tab-panel flex flex-col py-4" role="status" aria-live="polite">
+              <div className="animate-tab-panel flex flex-col py-3 sm:py-4" role="status" aria-live="polite">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#CBD5E1] bg-[#E2E8F0] text-[#EA580C]">
                   <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
                 </span>
 
-                <h3 className="mt-5 font-display text-2xl font-extrabold tracking-[-0.02em] text-[#0F172A]">
+                <h3 className="mt-4 sm:mt-5 font-display text-xl sm:text-2xl font-extrabold tracking-[-0.02em] text-[#0F172A]">
                   Solicitud técnica registrada
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -236,7 +237,7 @@ export default function ContactForm() {
                   cargo.
                 </p>
 
-                <dl className="mt-6 space-y-2 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] p-4 text-sm">
+                <dl className="mt-5 space-y-2 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] p-4 text-sm">
                   <div className="flex flex-wrap justify-between gap-2">
                     <dt className="text-slate-500">Nombre / Empresa:</dt>
                     <dd className="font-semibold text-[#0F172A]">{submittedData.nombre}</dd>
@@ -253,7 +254,7 @@ export default function ContactForm() {
                   </div>
                 </dl>
 
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <a
                     href={whatsappCopyHref}
                     target="_blank"
@@ -274,9 +275,8 @@ export default function ContactForm() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  {/* Nombre / Empresa */}
+              <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                   <div>
                     <label
                       htmlFor="contact-nombre"
@@ -296,7 +296,7 @@ export default function ContactForm() {
                       placeholder="Ej: Arq. Martín Gómez / Logística Sur"
                       aria-invalid={Boolean(errors.nombre)}
                       aria-describedby={errors.nombre ? 'error-nombre' : undefined}
-                      className={`mt-2 ${inputBaseClass} ${
+                      className={`mt-1.5 sm:mt-2 ${inputBaseClass} ${
                         errors.nombre
                           ? 'border-red-600 focus:border-red-600'
                           : 'border-[#CBD5E1] focus:border-[#EA580C]'
@@ -313,7 +313,6 @@ export default function ContactForm() {
                     )}
                   </div>
 
-                  {/* Teléfono */}
                   <div>
                     <label
                       htmlFor="contact-telefono"
@@ -333,7 +332,7 @@ export default function ContactForm() {
                       placeholder="Ej: 11 5555-1234"
                       aria-invalid={Boolean(errors.telefono)}
                       aria-describedby={errors.telefono ? 'error-telefono' : undefined}
-                      className={`mt-2 ${inputBaseClass} ${
+                      className={`mt-1.5 sm:mt-2 ${inputBaseClass} ${
                         errors.telefono
                           ? 'border-red-600 focus:border-red-600'
                           : 'border-[#CBD5E1] focus:border-[#EA580C]'
@@ -351,8 +350,7 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  {/* Email */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                   <div>
                     <label
                       htmlFor="contact-email"
@@ -372,7 +370,7 @@ export default function ContactForm() {
                       placeholder="correo@empresa.com"
                       aria-invalid={Boolean(errors.email)}
                       aria-describedby={errors.email ? 'error-email' : undefined}
-                      className={`mt-2 ${inputBaseClass} ${
+                      className={`mt-1.5 sm:mt-2 ${inputBaseClass} ${
                         errors.email
                           ? 'border-red-600 focus:border-red-600'
                           : 'border-[#CBD5E1] focus:border-[#EA580C]'
@@ -389,7 +387,6 @@ export default function ContactForm() {
                     )}
                   </div>
 
-                  {/* Servicio requerido */}
                   <div>
                     <label
                       htmlFor="contact-servicio"
@@ -407,7 +404,7 @@ export default function ContactForm() {
                       onBlur={handleBlur}
                       aria-invalid={Boolean(errors.servicio)}
                       aria-describedby={errors.servicio ? 'error-servicio' : undefined}
-                      className={`mt-2 ${inputBaseClass} ${
+                      className={`mt-1.5 sm:mt-2 ${inputBaseClass} ${
                         errors.servicio
                           ? 'border-red-600 focus:border-red-600'
                           : 'border-[#CBD5E1] focus:border-[#EA580C]'
@@ -432,7 +429,6 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                {/* Detalle de la obra */}
                 <div>
                   <label
                     htmlFor="contact-detalle"
@@ -443,7 +439,7 @@ export default function ContactForm() {
                   <textarea
                     id="contact-detalle"
                     name="detalle"
-                    rows={4}
+                    rows={3}
                     required
                     disabled={isSubmitting}
                     value={formData.detalle}
@@ -452,7 +448,7 @@ export default function ContactForm() {
                     placeholder="Contanos ubicación, m² estimados, uso previsto del piso o etapa de obra..."
                     aria-invalid={Boolean(errors.detalle)}
                     aria-describedby={errors.detalle ? 'error-detalle' : undefined}
-                    className={`mt-2 w-full rounded-xl border bg-[#F8FAFC] px-3.5 py-3 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px] ${
+                    className={`mt-1.5 sm:mt-2 w-full rounded-xl border bg-[#F8FAFC] px-3.5 py-2.5 text-sm text-[#0F172A] placeholder:text-slate-500 transition-colors focus:bg-white focus:outline-none disabled:opacity-60 sm:text-[15px] ${
                       errors.detalle
                         ? 'border-red-600 focus:border-red-600'
                         : 'border-[#CBD5E1] focus:border-[#EA580C]'
@@ -469,15 +465,15 @@ export default function ContactForm() {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
                   <p className="text-xs text-slate-600">
-                    Presupuesto y asesoramiento técnico sin cargo.
+                    Presupuesto y visitas técnicas sin cargo.
                   </p>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex min-h-[50px] items-center justify-center gap-2.5 rounded-xl bg-[#0F172A] px-7 text-sm font-semibold text-[#F8FAFC] transition-[background-color,transform] duration-150 hover:bg-[#EA580C] disabled:cursor-not-allowed disabled:opacity-70 active:scale-[0.97]"
+                    className="inline-flex min-h-[48px] sm:min-h-[50px] items-center justify-center gap-2.5 rounded-xl bg-[#0F172A] px-7 text-sm font-semibold text-[#F8FAFC] transition-[background-color,transform] duration-150 hover:bg-[#EA580C] disabled:cursor-not-allowed disabled:opacity-70 active:scale-[0.97]"
                   >
                     {isSubmitting ? (
                       <>
