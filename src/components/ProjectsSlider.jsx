@@ -158,13 +158,13 @@ export default function ProjectsSlider({ onSelectService }) {
                     className="grid w-full shrink-0 grid-cols-1 lg:grid-cols-12"
                     aria-hidden={!isActiveSlide}
                   >
-                    {/* Fotografía 4:3 mobile / 16:10 desktop con acceso a Lightbox */}
-                    <div className="relative bg-[#0F172A] lg:col-span-7">
+                    {/* Fotografía: proporción casi cuadrada en PC (50/50) para evitar recortes y franjas vacías */}
+                    <div className="relative bg-[#0F172A] lg:col-span-6">
                       <button
                         type="button"
                         onClick={() => setLightboxIndex(index)}
                         tabIndex={isActiveSlide ? 0 : -1}
-                        className="group relative block w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#EA580C]"
+                        className="group relative block w-full aspect-square sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[540px] overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#EA580C]"
                         aria-label={`Ampliar fotografía de ${project.title}`}
                       >
                         <img
@@ -190,7 +190,7 @@ export default function ProjectsSlider({ onSelectService }) {
                     </div>
 
                     {/* Ficha técnica del proyecto */}
-                    <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-6 sm:p-8 lg:col-span-5 lg:border-t-0 lg:border-l">
+                    <div className="flex flex-col justify-between border-t border-[#CBD5E1] bg-[#F8FAFC] p-6 sm:p-8 lg:col-span-6 lg:border-t-0 lg:border-l">
                       <div>
                         <span
                           className={`inline-block rounded-full px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${

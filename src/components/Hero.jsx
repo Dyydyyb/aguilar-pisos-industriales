@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { ArrowDownRight, Building2, ClipboardCheck, Cog, MapPin } from 'lucide-react';
-import { HERO_INDICATORS } from '../data/siteData';
+import { HERO_INDICATORS, projectsData } from '../data/siteData';
 
 const INDICATOR_ICONS = {
   cog: Cog,
@@ -7,25 +8,98 @@ const INDICATOR_ICONS = {
   clipboard: ClipboardCheck,
 };
 
+const SLIDE_INTERVAL_MS = 4500;
+const TRANSITION_DURATION_MS = 900;
+
 export default function Hero() {
+  // Pista con clon del primer slide al final para loop infinito hacia adelante sin retroceso
+  const slides = [...projectsData, projectsData[0]];
+  const totalRealSlides = projectsData.length;
+
+  const [trackIndex, setTrackIndex] = useState(0);
+  const [transitionEnabled, setTransitionEnabled] = useState(true);
+
+  const activeRealIndex = trackIndex % totalRealSlides;
+  const activeProject = projectsData[activeRealIndex];
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return undefined;
+    }
+
+    const timer = window.setInterval(() => {
+      if (document.hidden) return;
+      setTransitionEnabled(true);
+      setTrackIndex((prev) => (prev >= totalRealSlides ? 1 : prev + 1));
+    }, SLIDE_INTERVAL_MS);
+
+    return () => window.clearInterval(timer);
+  }, [totalRealSlides]);
+
+  // Al terminar la transición sobre el clon final, resetea silenciosamente al índice 0
+  useEffect(() => {
+    if (trackIndex !== totalRealSlides) return undefined;
+
+    const resetTimer = window.setTimeout(() => {
+      setTransitionEnabled(false);
+      setTrackIndex(0);
+    }, TRANSITION_DURATION_MS + 30);
+
+    return () => window.clearTimeout(resetTimer);
+  }, [trackIndex, totalRealSlides]);
+
+  // Rehabilita la transición en el frame siguiente al salto silencioso
+  useEffect(() => {
+    if (transitionEnabled) return undefined;
+    const rafId = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        setTransitionEnabled(true);
+      });
+    });
+    return () => window.cancelAnimationFrame(rafId);
+  }, [transitionEnabled]);
+
+  const handleSelectSlide = (index) => {
+    setTransitionEnabled(true);
+    setTrackIndex(index);
+  };
+
   return (
     <section
       id="inicio"
       className="relative flex min-h-screen flex-col justify-between bg-[#0F172A] pt-[76px] text-[#F8FAFC] overflow-hidden"
     >
-      {/* Mosaico unificado de todas las obras reales con asentamiento suave + capa oscura mate */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <img
-          src="/images/hero-obras-collage.webp"
-          alt="Obras reales de Aguilar Pisos Industriales: Plaza San Juan Bautista en hormigón peinado y pigmento azul, playón cívico, senda peatonal y piso industrial de acceso de camiones"
-          className="animate-hero-canvas h-full w-full object-cover object-center"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-slate-950/75" aria-hidden="true" />
+      {/* Carrusel continuo en loop con las fotografías reales de los proyectos */}
+      <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <div
+          className={`flex h-full w-full ${
+            transitionEnabled
+              ? 'transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]'
+              : 'transition-none'
+          }`}
+          style={{ transform: `translateX(-${trackIndex * 100}%)` }}
+        >
+          {slides.map((project, idx) => (
+            <div key={`${project.id}-${idx}`} className="relative h-full w-full shrink-0">
+              <img
+                src={project.image}
+                alt=""
+                fetchPriority={idx === 0 ? 'high' : 'auto'}
+                className={`h-full w-full object-cover ${
+                  project.imagePosition || 'object-center'
+                }`}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Capa oscura mate para legibilidad absoluta sobre cualquier foto */}
+        <div className="absolute inset-0 bg-slate-950/75" />
       </div>
 
-      {/* Contenido principal del Hero con coreografía de entrada */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 items-center px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      {/* Contenido principal del Hero */}
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <div className="max-w-4xl">
           <div
             className="animate-hero-fade inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-[#334155] bg-[#0F172A]/95 px-4 py-2 text-xs font-medium text-slate-200 sm:text-sm"
@@ -75,6 +149,42 @@ export default function Hero() {
             >
               Ver Proyectos
             </a>
+          </div>
+        </div>
+
+        {/* Indicador discreto del carrusel de obras en curso */}
+        <div className="animate-hero-fade mt-10 flex flex-wrap items-center justify-between gap-4 sm:mt-12" style={{ animationDelay: '360ms' }}>
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-[#334155] bg-[#0F172A]/90 px-3.5 py-1.5 text-xs text-slate-200">
+            <span className="tabular-nums font-bold text-[#EA580C]">
+              0{activeRealIndex + 1} / 0{totalRealSlides}
+            </span>
+            <span className="text-slate-500" aria-hidden="true">
+              •
+            </span>
+            <span className="font-medium text-slate-100">{activeProject.shortLabel}</span>
+          </div>
+
+          <div className="flex items-center gap-1.5" role="tablist" aria-label="Obra visible en portada">
+            {projectsData.map((project, idx) => {
+              const isCurrent = idx === activeRealIndex;
+              return (
+                <button
+                  key={project.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isCurrent}
+                  aria-label={`Mostrar obra ${idx + 1}: ${project.shortLabel}`}
+                  onClick={() => handleSelectSlide(idx)}
+                  className="flex min-h-[36px] items-center px-1"
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all duration-300 ${
+                      isCurrent ? 'w-7 bg-[#EA580C]' : 'w-2.5 bg-slate-400/70 hover:bg-white'
+                    }`}
+                  />
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

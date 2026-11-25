@@ -73,19 +73,6 @@
    Coreografía de movimiento (100% GPU: transform, opacity, clip-path)
    ========================================================================= */
 
-@keyframes heroCanvasSettle {
-  from {
-    transform: scale(1.06);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-.animate-hero-canvas {
-  animation: heroCanvasSettle 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
 @keyframes heroClipReveal {
   from {
     opacity: 0;
@@ -196,7 +183,6 @@
     scroll-behavior: auto;
   }
 
-  .animate-hero-canvas,
   .animate-hero-clip,
   .animate-hero-fade,
   .animate-tab-panel,

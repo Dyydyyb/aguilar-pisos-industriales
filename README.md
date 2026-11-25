@@ -37,7 +37,6 @@ src/
 El logo oficial y las fotografías reales de obra se sirven desde `public/images/`:
 
 - `public/images/logo-aguilar.png` (Logo oficial y favicon)
-- `public/images/hero-obras-collage.webp` (Hero unificado con las 4 fotografías reales de obra)
 - `public/images/obra-plaza-san-juan-bautista.webp` (1. Obra principal: Hormigón peinado y sector llaneado con pigmento azul — Plaza Principal San Juan Bautista, Florencio Varela)
 - `public/images/obra-playon-civico.webp` (2. Construcción de playón cívico)
 - `public/images/obra-senda-plaza-barrial.webp` (3. Senda peatonal para plaza barrial)
