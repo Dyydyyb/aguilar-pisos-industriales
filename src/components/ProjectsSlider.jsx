@@ -4,8 +4,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Expand,
+  Layers,
   MapPin,
-  Ruler,
   X,
 } from 'lucide-react';
 import Reveal from './Reveal';
@@ -89,11 +89,11 @@ export default function ProjectsSlider({ onSelectService }) {
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-[#F8FAFC] text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
-              Proyectos Realizados en Obra
+              Obras Realizadas en Campo
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-300">
-              Pisos industriales llaneados, playones vehiculares, plateas y naves ejecutadas con
-              equipamiento propio en Buenos Aires, Zona Sur y AMBA.
+              Trabajos reales en pisos industriales, accesos de camiones, playones cívicos, sendas
+              y hormigón pigmentado ejecutados en Florencio Varela y Buenos Aires Zona Sur.
             </p>
           </div>
 
@@ -136,7 +136,7 @@ export default function ProjectsSlider({ onSelectService }) {
             onTouchEnd={handleTouchEnd}
             role="region"
             aria-roledescription="carrusel"
-            aria-label="Galería de proyectos realizados"
+            aria-label="Galería de obras realizadas"
           >
             <div
               className="flex transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -148,7 +148,7 @@ export default function ProjectsSlider({ onSelectService }) {
                   className="grid w-full shrink-0 grid-cols-1 lg:grid-cols-12"
                   aria-hidden={index !== currentIndex}
                 >
-                  {/* Fotografía 4:3 mobile / 16:10 desktop con acceso a Lightbox */}
+                  {/* Fotografía 4:3 mobile / 16:10 desktop con encuadre calibrado y acceso a Lightbox */}
                   <div className="relative bg-[#0F172A] lg:col-span-7">
                     <button
                       type="button"
@@ -161,11 +161,18 @@ export default function ProjectsSlider({ onSelectService }) {
                         src={project.image}
                         alt={project.alt}
                         loading={index === 0 ? 'eager' : 'lazy'}
-                        className="h-full w-full object-cover object-center transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                        className={`h-full w-full object-cover ${
+                          project.imagePosition || 'object-center'
+                        } transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]`}
                       />
+                      {project.featured && (
+                        <span className="absolute top-3 left-3 inline-flex items-center gap-2 bg-[#EA580C] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-white">
+                          Obra Principal
+                        </span>
+                      )}
                       <span className="absolute right-3 bottom-3 inline-flex min-h-[40px] items-center gap-2 border border-[#334155] bg-[#0F172A]/95 px-3 py-1.5 text-xs font-semibold text-[#F8FAFC] transition-colors group-hover:border-[#EA580C] group-hover:bg-[#EA580C]">
                         <Expand className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>Ampliar</span>
+                        <span>Ver completa</span>
                       </span>
                     </button>
                   </div>
@@ -173,11 +180,17 @@ export default function ProjectsSlider({ onSelectService }) {
                   {/* Ficha técnica del proyecto */}
                   <div className="flex flex-col justify-between border-t border-[#334155] p-6 sm:p-8 lg:col-span-5 lg:border-t-0 lg:border-l">
                     <div>
-                      <span className="inline-block border border-[#334155] bg-[#0F172A] px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#EA580C]">
+                      <span
+                        className={`inline-block px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] ${
+                          project.featured
+                            ? 'bg-[#EA580C] text-white'
+                            : 'border border-[#334155] bg-[#0F172A] text-[#EA580C]'
+                        }`}
+                      >
                         {project.category}
                       </span>
 
-                      <h3 className="mt-4 font-display text-2xl font-extrabold leading-tight tracking-[-0.02em] text-[#F8FAFC]">
+                      <h3 className="mt-4 font-display text-xl font-extrabold leading-tight tracking-[-0.02em] text-[#F8FAFC] sm:text-2xl">
                         {project.title}
                       </h3>
 
@@ -199,16 +212,16 @@ export default function ProjectsSlider({ onSelectService }) {
                         </div>
 
                         <div className="flex items-start gap-2.5">
-                          <Ruler
+                          <Layers
                             className="mt-0.5 h-4 w-4 shrink-0 text-[#EA580C]"
                             aria-hidden="true"
                           />
                           <div>
                             <dt className="text-[11px] font-medium uppercase tracking-[0.08em] text-slate-400">
-                              Superficie aprox.
+                              Terminación
                             </dt>
-                            <dd className="tabular-nums mt-0.5 text-sm font-semibold text-slate-100">
-                              {project.area}
+                            <dd className="mt-0.5 text-sm font-semibold text-slate-100">
+                              {project.execution}
                             </dd>
                           </div>
                         </div>
@@ -271,13 +284,13 @@ export default function ProjectsSlider({ onSelectService }) {
             </div>
 
             <p className="text-xs text-slate-400">
-              Tocá cualquier imagen para abrirla en pantalla completa.
+              Tocá cualquier fotografía para verla completa en pantalla ampliada.
             </p>
           </div>
         </Reveal>
       </div>
 
-      {/* Lightbox Modal a pantalla completa */}
+      {/* Lightbox Modal a pantalla completa (muestra fotografía original sin recorte) */}
       {activeLightboxProject && (
         <div
           role="dialog"
@@ -296,8 +309,8 @@ export default function ProjectsSlider({ onSelectService }) {
                 <p className="truncate font-display text-sm font-bold text-[#F8FAFC] sm:text-base">
                   {activeLightboxProject.title}
                 </p>
-                <p className="tabular-nums text-xs text-slate-300">
-                  {activeLightboxProject.location} • {activeLightboxProject.area}
+                <p className="text-xs text-slate-300">
+                  {activeLightboxProject.location} • {activeLightboxProject.execution}
                 </p>
               </div>
 
@@ -316,7 +329,7 @@ export default function ProjectsSlider({ onSelectService }) {
               <img
                 src={activeLightboxProject.image}
                 alt={activeLightboxProject.alt}
-                className="max-h-[70vh] w-full object-contain"
+                className="max-h-[72vh] w-full object-contain"
               />
 
               {/* Navegación dentro del Lightbox */}

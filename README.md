@@ -31,17 +31,18 @@ src/
     └── useScrollProgress.js # Progreso de lectura en navbar
 ```
 
-## Reemplazo de fotografías de obra
+## Identidad y fotografías de obra
 
-Las fotografías del Hero y de la galería `projectsData` se sirven desde `public/images/`:
+El logo oficial y las fotografías reales de obra se sirven desde `public/images/`:
 
-- `public/images/hero-concrete.webp`
-- `public/images/project-llaneado-doble.webp`
-- `public/images/project-playon-vehicular.webp`
-- `public/images/project-nave-industrial.webp`
-- `public/images/project-platea-obra-civil.webp`
+- `public/images/logo-aguilar.png` (Logo oficial y favicon)
+- `public/images/hero-concrete.webp` (Fondo principal del Hero)
+- `public/images/obra-plaza-san-juan-bautista.webp` (Obra principal: Hormigón peinado y sector llaneado con pigmento azul — Plaza Principal San Juan Bautista, Florencio Varela)
+- `public/images/obra-acceso-camiones.webp` (Piso industrial de acceso de camiones con allanadora doble tripulada)
+- `public/images/obra-playon-civico.webp` (Construcción de playón cívico)
+- `public/images/obra-senda-plaza-barrial.webp` (Senda peatonal para plaza barrial)
 
-Para subir fotos reales de obra, reemplazá esos archivos manteniendo los mismos nombres o actualizá las rutas en `src/data/siteData.js`.
+Para sumar nuevas obras o actualizar imágenes, editá `projectsData` en `src/data/siteData.js`.
 
 ## Desarrollo local
 
