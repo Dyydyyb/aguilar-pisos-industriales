@@ -16,8 +16,7 @@ const VISIBLE_VARIANT_CLASSES = {
 
 /**
  * Custom hook reutilizable con IntersectionObserver para animar entradas fluidas al scrollear.
- * Soporta variantes (`up`, `scale`, `left`, `right`), `delayMs` (stagger) y `prefers-reduced-motion`.
- * Libera `will-change` automáticamente una vez revelada la vista.
+ * Sin `will-change` permanente en reposo para evitar promoción innecesaria de capas bajo el pliegue.
  */
 export function useScrollReveal({
   threshold = 0.12,
@@ -70,8 +69,8 @@ export function useScrollReveal({
   const hiddenClass = HIDDEN_VARIANT_CLASSES[variant] || HIDDEN_VARIANT_CLASSES.up;
   const visibleClass = VISIBLE_VARIANT_CLASSES[variant] || VISIBLE_VARIANT_CLASSES.up;
 
-  const revealClassName = `transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-    isVisible ? visibleClass : `${hiddenClass} will-change-[opacity,transform]`
+  const revealClassName = `transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+    isVisible ? visibleClass : hiddenClass
   }`;
 
   const revealStyle = delayMs > 0 ? { transitionDelay: `${delayMs}ms` } : undefined;

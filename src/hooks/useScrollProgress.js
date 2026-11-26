@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
- * Retorna el progreso de lectura (0 a 100) y si la ventana superó el umbral inicial de scroll.
+ * Actualiza la barra de progreso directamente por ref (0 re-renders por frame al scrollear)
+ * y solo actualiza estado React cuando cruza el umbral `isScrolled`.
  */
 export function useScrollProgress(scrolledThreshold = 24) {
-  const [state, setState] = useState({ progress: 0, isScrolled: false });
+  const progressBarRef = useRef(null);
+  const isScrolledRef = useRef(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     let rafId = null;
@@ -14,13 +17,17 @@ export function useScrollProgress(scrolledThreshold = 24) {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollHeight =
         document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress =
-        scrollHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100)) : 0;
+      const ratio = scrollHeight > 0 ? Math.min(1, Math.max(0, scrollTop / scrollHeight)) : 0;
 
-      setState({
-        progress,
-        isScrolled: scrollTop > scrolledThreshold,
-      });
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${ratio})`;
+      }
+
+      const nextScrolled = scrollTop > scrolledThreshold;
+      if (nextScrolled !== isScrolledRef.current) {
+        isScrolledRef.current = nextScrolled;
+        setIsScrolled(nextScrolled);
+      }
     };
 
     const handleScroll = () => {
@@ -42,5 +49,5 @@ export function useScrollProgress(scrolledThreshold = 24) {
     };
   }, [scrolledThreshold]);
 
-  return state;
+  return { progressBarRef, isScrolled };
 }

@@ -3,17 +3,18 @@ export default function BrandLogo({ variant = 'light', compact = false }) {
 
   return (
     <span className="inline-flex items-center gap-3 select-none">
-      {/* Logo oficial Aguilar Pisos Industriales en sello circular mate */}
       <span
         className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white border ${
           compact ? 'h-11 w-11' : 'h-13 w-13'
-        } ${isLight ? 'border-[#334155]' : 'border-[#CBD5E1]'}`}
+        } ${isLight ? 'border-steel-border' : 'border-concrete-border'}`}
       >
         <img
-          src="/images/logo-aguilar.png"
-          alt="Logo Aguilar Pisos Industriales"
+          src="/images/logo-aguilar.webp"
+          alt=""
+          aria-hidden="true"
           width={150}
           height={150}
+          decoding="async"
           className="h-full w-full object-contain"
         />
       </span>
@@ -22,16 +23,17 @@ export default function BrandLogo({ variant = 'light', compact = false }) {
         <span
           className={`font-display font-extrabold leading-[0.92] tracking-[-0.02em] ${
             compact ? 'text-[17px] sm:text-[18px]' : 'text-xl'
-          } ${isLight ? 'text-[#F8FAFC]' : 'text-[#0F172A]'}`}
+          } ${isLight ? 'text-ink-inverse' : 'text-ink'}`}
         >
           AGUILAR
         </span>
         <span
           className={`text-[10px] font-semibold leading-[0.95] tracking-[0.14em] uppercase ${
-            isLight ? 'text-slate-300' : 'text-slate-600'
+            isLight ? 'text-ink-inverse-muted' : 'text-ink-muted'
           }`}
         >
-          Pisos <span className="text-[#EA580C]">Industriales</span>
+          Pisos{' '}
+          <span className={isLight ? 'text-obra-bright' : 'text-obra'}>Industriales</span>
         </span>
       </span>
     </span>

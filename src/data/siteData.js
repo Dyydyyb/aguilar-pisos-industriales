@@ -9,6 +9,9 @@ export const BUSINESS_INFO = {
   location: 'Buenos Aires, Zona Sur',
   coverage: 'Buenos Aires, Zona Sur (AMBA y alrededores)',
   commercialHook: 'Cotizaciones y consultas 100% sin cargo',
+  commercialHookShort: 'Presupuestos sin cargo',
+  technicalDirection: 'Dirección Técnica de Maestro Mayor de Obras',
+  responseSla: 'Respuesta y relevamiento en 24/48 hs',
   phoneDisplay: '+54 9 11 5889-0608',
   phoneHref: 'tel:+5491158890608',
   whatsappNumber: '5491158890608',
@@ -17,12 +20,19 @@ export const BUSINESS_INFO = {
   instagramUrl: 'https://www.instagram.com/aguilar.pisos.industriales/',
 };
 
+export const DEFAULT_WHATSAPP_MESSAGES = {
+  general:
+    'Hola Aguilar Pisos Industriales, ¿cómo están? Quiero solicitar una cotización sin cargo.',
+  allianceDirect:
+    'Hola Aguilar Pisos Industriales, ¿cómo están? Me comunico desde un corralón / empresa del rubro para conversar sobre una alianza comercial de recomendación de obras y materiales en Zona Sur.',
+};
+
 export const NAV_LINKS = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Alianzas', href: '#alianzas' },
-  { label: 'Cotizador', href: '#cotizador' },
-  { label: 'Contacto', href: '#contacto' },
+  { id: 'servicios', label: 'Servicios', href: '#servicios' },
+  { id: 'proyectos', label: 'Proyectos', href: '#proyectos' },
+  { id: 'cotizador', label: 'Cotizador', href: '#cotizador' },
+  { id: 'alianzas', label: 'Alianzas', href: '#alianzas' },
+  { id: 'contacto', label: 'Contacto', href: '#contacto' },
 ];
 
 export const HERO_INDICATORS = [
@@ -33,38 +43,36 @@ export const HERO_INDICATORS = [
     icon: 'cog',
   },
   {
-    id: 'obra-civil',
-    title: 'Obra Civil y Arquitectura',
-    detail: 'Dirección técnica, plateas y naves llave en mano',
+    id: 'direccion-tecnica',
+    title: 'Dirección de Maestro Mayor de Obras',
+    detail: 'Pisos industriales, obra civil y arquitectura integral',
     icon: 'building',
   },
   {
     id: 'presupuesto',
     title: 'Presupuesto Sin Cargo',
-    detail: 'Relevamiento y asesoramiento técnico en Zona Sur y AMBA',
+    detail: 'Visita técnica en Florencio Varela, Zona Sur y AMBA',
     icon: 'clipboard',
   },
 ];
 
 /**
- * Opciones del Filtro Inteligente de WhatsApp
+ * Opciones del Filtro Inteligente de WhatsApp (≤4 opciones por paso)
  */
-export const ALLIANCE_SERVICE_OPTION = 'Alianza Corralón / Proveedor';
-
 export const WHATSAPP_SERVICE_OPTIONS = [
   'Piso Industrial / Galpón',
   'Entrada / Playón Vehicular',
   'Arquitectura y Construcción',
   'Otro / Asesoramiento',
-  ALLIANCE_SERVICE_OPTION,
 ];
+
+export const WHATSAPP_AREA_DEFAULT = 'A confirmar';
 
 export const WHATSAPP_AREA_OPTIONS = [
   'Menos de 100 m²',
   '100 a 500 m²',
   '500 a 1.500 m²',
   'Más de 1.500 m²',
-  'No lo sé aún',
 ];
 
 export const WHATSAPP_SECTOR_OPTIONS = [
@@ -101,17 +109,14 @@ export const ALLIANCE_PILLARS = [
   },
 ];
 
-export const ALLIANCE_DIRECT_WHATSAPP_MESSAGE =
-  'Hola Aguilar Pisos Industriales, ¿cómo están? Me comunico desde un corralón / empresa del rubro para conversar sobre una alianza comercial de recomendación de obras y materiales en Zona Sur.';
-
 /**
  * Catálogo de servicios dividido en dos divisiones técnicas.
- * Cada servicio declara `filterCategory` para sincronizarse automáticamente con WhatsAppFilter.
  */
 export const SERVICE_DIVISIONS = [
   {
     id: 'pisos',
     label: 'Pisos Industriales',
+    shortLabel: 'Pisos Industriales',
     summary:
       'Ejecución mecanizada de pavimentos de hormigón de alta resistencia superficial y estructural para exigencia intensiva.',
     items: [
@@ -129,7 +134,7 @@ export const SERVICE_DIVISIONS = [
         title: 'Pisos para galpones, depósitos y naves logísticas',
         description:
           'Losas estructurales diseñadas para soportar estanterías de gran porte, tránsito permanente de autoelevadores y cargas concentradas.',
-        specs: ['Hormigón H-25 / H-30', 'Malla estructural', 'Tránsito pesado'],
+        specs: ['Hormigón H-25 / H-30 (alta resistencia)', 'Malla estructural', 'Tránsito pesado'],
         filterCategory: 'Piso Industrial / Galpón',
         icon: 'warehouse',
       },
@@ -146,7 +151,7 @@ export const SERVICE_DIVISIONS = [
         id: 'endurecedores-juntas',
         title: 'Endurecedores superficiales, corte y sellado de juntas',
         description:
-          'Aplicación en fresco de cuarzo o corindón para resistencia a la abrasión, aserrado mecánico de contracción y sellado elástico técnico.',
+          'Aplicación en fresco de cuarzo o corindón (minerales anti-desgaste) para resistencia a la abrasión, aserrado mecánico de contracción y sellado elástico.',
         specs: ['Cuarzo / Corindón', 'Aserrado preciso', 'Sellado poliuretánico'],
         filterCategory: 'Piso Industrial / Galpón',
         icon: 'shield',
@@ -156,15 +161,16 @@ export const SERVICE_DIVISIONS = [
   {
     id: 'arquitectura',
     label: 'Arquitectura y Construcción',
+    shortLabel: 'Arquitectura y Obra',
     summary:
-      'Planificación técnica, dirección profesional y ejecución llave en mano de infraestructura industrial, comercial y civil.',
+      'Planificación técnica, dirección de Maestro Mayor de Obras y ejecución llave en mano de infraestructura industrial, comercial y civil.',
     items: [
       {
         id: 'proyecto-direccion',
         title: 'Proyecto, dirección y ejecución de obra',
         description:
           'Desarrollo de documentación técnica, cómputos, planificación de etapas y conducción integral en obra con seguimiento permanente.',
-        specs: ['Dirección técnica', 'Cómputo y presupuesto', 'Control de calidad'],
+        specs: ['Maestro Mayor de Obras', 'Cómputo y presupuesto', 'Control de calidad'],
         filterCategory: 'Arquitectura y Construcción',
         icon: 'compass',
       },
@@ -218,6 +224,8 @@ export const projectsData = [
     description:
       'Intervención principal en la emblemática Plaza San Juan Bautista de Florencio Varela. Ejecución combinada de sectores en hormigón peinado antideslizante junto a paños llaneados mecánicamente con endurecedor y pigmento azul.',
     image: '/images/obra-plaza-san-juan-bautista.webp',
+    width: 899,
+    height: 888,
     imagePosition: 'object-[50%_58%]',
     alt: 'Hormigón peinado y sector llaneado con pigmento azul junto a allanadora mecánica en Plaza Principal San Juan Bautista de Florencio Varela',
     filterCategory: 'Piso Industrial / Galpón',
@@ -232,8 +240,10 @@ export const projectsData = [
     execution: 'Hormigón nivelado y peinado',
     specHighlight: 'Paños modulares • Reglas de nivelación • Terminación antideslizante',
     description:
-      'Construcción integral de playón cívico exterior en hormigón armado, ejecutado por paños modulares con control de pendientes, fratazado de borde y textura superficial peinada antideslizante.',
+      'Construcción integral de playón cívico exterior en hormigón armado, ejecutado por paños modulares con control de pendientes, borde alisado (fratazado) y textura superficial peinada antideslizante.',
     image: '/images/obra-playon-civico.webp',
+    width: 903,
+    height: 898,
     imagePosition: 'object-[50%_64%]',
     alt: 'Construcción de playón cívico de hormigón con terminación peinada y nivelación por paños',
     filterCategory: 'Arquitectura y Construcción',
@@ -250,6 +260,8 @@ export const projectsData = [
     description:
       'Ejecución de senda peatonal continua de hormigón elaborado para plaza barrial, con preparación de base, encofrado perimetral alineado, descarga directa de mixer y peinado antideslizante.',
     image: '/images/obra-senda-plaza-barrial.webp',
+    width: 898,
+    height: 893,
     imagePosition: 'object-[50%_50%]',
     alt: 'Ejecución de senda peatonal de hormigón peinado en plaza barrial con camión mixer en obra',
     filterCategory: 'Arquitectura y Construcción',
@@ -266,43 +278,74 @@ export const projectsData = [
     description:
       'Ejecución de piso industrial de alta resistencia para acceso y circulación de camiones pesados, terminado con allanadora doble tripulada propia para lograr máxima planimetría y durabilidad superficial.',
     image: '/images/obra-acceso-camiones.webp',
+    width: 1024,
+    height: 1019,
     imagePosition: 'object-[50%_62%]',
     alt: 'Operario conduciendo allanadora doble tripulada sobre piso industrial de hormigón para acceso de camiones',
     filterCategory: 'Entrada / Playón Vehicular',
   },
 ];
 
-export const FORM_SERVICE_OPTIONS = [
-  'Piso Industrial / Hormigón Llaneado',
-  'Piso para Galpón o Nave Logística',
-  'Playón de Maniobras / Entrada Vehicular',
-  'Endurecedores, Corte y Sellado de Juntas',
-  'Proyecto y Dirección de Obra',
-  'Construcción de Galpón / Nave Llave en Mano',
-  'Movimiento de Suelos y Platea de Fundación',
-  'Remodelación Industrial / Obra Civil Integral',
-  'Alianza Comercial (Corralón / Hormigonera / Estudio)',
-  'Otro / Asesoramiento Técnico',
+/**
+ * Opciones agrupadas (<optgroup>) para el Formulario Formal
+ */
+export const FORM_SERVICE_GROUPS = [
+  {
+    label: 'Pisos Industriales',
+    options: [
+      'Piso Industrial / Hormigón Llaneado',
+      'Piso para Galpón o Nave Logística',
+      'Playón de Maniobras / Entrada Vehicular',
+      'Endurecedores, Corte y Sellado de Juntas',
+    ],
+  },
+  {
+    label: 'Arquitectura y Construcción',
+    options: [
+      'Proyecto y Dirección de Obra',
+      'Construcción de Galpón / Nave Llave en Mano',
+      'Movimiento de Suelos y Platea de Fundación',
+      'Remodelación Industrial / Obra Civil Integral',
+    ],
+  },
+  {
+    label: 'Alianzas Comerciales B2B',
+    options: ['Alianza Comercial (Corralón / Hormigonera / Estudio)'],
+  },
+  {
+    label: 'Otras Consultas',
+    options: ['Otro / Asesoramiento Técnico'],
+  },
 ];
 
 /**
- * Construye el texto exacto y la URL codificada para WhatsApp (cliente final o alianza B2B).
+ * Construye el texto exacto y la URL codificada para WhatsApp (modo obra o alianza B2B).
  */
-export function buildWhatsAppQuoteMessage({ service, serviceDetail, area, sector, zone }) {
+export function buildWhatsAppQuoteMessage({
+  mode = 'obra',
+  service,
+  serviceDetail,
+  area,
+  sector,
+  zone,
+}) {
   const cleanZone =
-    zone && zone.trim().length > 0 ? zone.trim() : 'A confirmar (Buenos Aires / Zona Sur)';
+    zone && zone.trim().length > 0
+      ? zone.trim().slice(0, 100)
+      : 'A confirmar (Buenos Aires / Zona Sur)';
 
-  if (service === ALLIANCE_SERVICE_OPTION) {
+  if (mode === 'alianza') {
     const cleanSector = sector || WHATSAPP_SECTOR_OPTIONS[0];
     return `Hola Aguilar Pisos Industriales, ¿cómo están? Me comunico para conversar sobre una alianza comercial de recomendación de obras y materiales en Zona Sur. • Rubro: ${cleanSector} • Zona: ${cleanZone}. ¡Espero su respuesta!`;
   }
 
+  const cleanArea = area || WHATSAPP_AREA_DEFAULT;
   const formattedService =
     serviceDetail && serviceDetail.trim().length > 0
       ? `${service} (${serviceDetail.trim()})`
       : service;
 
-  return `Hola Aguilar Pisos Industriales, ¿cómo están? Quiero solicitar una cotización sin cargo. • Servicio: ${formattedService} • Superficie aprox.: ${area} • Zona: ${cleanZone}. ¡Espero su respuesta!`;
+  return `Hola Aguilar Pisos Industriales, ¿cómo están? Quiero solicitar una cotización sin cargo. • Servicio: ${formattedService} • Superficie aprox.: ${cleanArea} • Zona: ${cleanZone}. ¡Espero su respuesta!`;
 }
 
 export function buildWhatsAppUrl(message) {
